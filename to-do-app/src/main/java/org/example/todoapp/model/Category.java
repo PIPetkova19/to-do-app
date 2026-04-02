@@ -1,4 +1,4 @@
-package model;
+package org.example.todoapp.model;
 
 import jakarta.persistence.*;
 
