@@ -31,8 +31,7 @@ public class CategoryService {
     }
 
     public CategoryResponseDTO getById(Long id) {
-        Category category=repository.getCategoryById(id);
-        return mapper.toDTO(category);
+        return mapper.toDTO(repository.getCategoryById(id));
     }
 
     public void delete(Long id)

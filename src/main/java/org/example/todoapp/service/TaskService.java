@@ -29,8 +29,7 @@ public class TaskService {
     }
 
     public TaskResponseDTO getById(Long id) {
-        Task task = repository.getTaskById(id);
-        return mapper.toDTO(task);
+        return mapper.toDTO(repository.getTaskById(id));
     }
 
     public List<TaskResponseDTO> getAll() {

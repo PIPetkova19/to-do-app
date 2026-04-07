@@ -12,8 +12,6 @@ public class CategoryMapper {
     }
 
     public Category toEntity(CategoryRequestDTO dto) {
-        Category category = new Category();
-        category.setTitle(dto.title());
-        return category;
+        return new Category(dto.title());
     }
 }

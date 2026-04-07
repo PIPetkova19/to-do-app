@@ -23,6 +23,9 @@ public class Task {
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+private User user;
+
     public Task() {}
 
     public Task(String title, String description,
