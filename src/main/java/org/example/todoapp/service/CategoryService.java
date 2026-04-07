@@ -1,7 +1,7 @@
 package org.example.todoapp.service;
 
-import org.example.todoapp.dto.category.CategoryRequestDTO;
-import org.example.todoapp.dto.category.CategoryResponseDTO;
+import org.example.todoapp.dto.category.CategoryRequestDto;
+import org.example.todoapp.dto.category.CategoryResponseDto;
 import org.example.todoapp.mapper.category.CategoryMapper;
 import org.example.todoapp.model.Category;
 import org.example.todoapp.repository.CategoryRepository;
@@ -21,24 +21,24 @@ public class CategoryService {
     }
 
     @Transactional
-    public void save(CategoryRequestDTO dto) {
+    public void save(CategoryRequestDto dto) {
         Category category= mapper.toEntity(dto);
         repository.save(category);
         System.out.println("Saved Category: " + category.getTitle());
     }
 
     @Transactional(readOnly = true)
-    public List<CategoryResponseDTO> getAll() {
+    public List<CategoryResponseDto> getAll() {
        return repository
                .findAll()
                .stream()
-               .map(mapper::toDTO)
+               .map(mapper::toDto)
                .toList();
     }
 
     @Transactional(readOnly = true)
-    public CategoryResponseDTO getById(Long id) {
-        return mapper.toDTO(repository.getCategoryById(id));
+    public CategoryResponseDto getById(Long id) {
+        return mapper.toDto(repository.getCategoryById(id));
     }
 
     @Transactional
@@ -49,7 +49,7 @@ public class CategoryService {
     }
 
     @Transactional
-    public void update(Long id, CategoryRequestDTO dto) {
+    public void update(Long id, CategoryRequestDto dto) {
        Category category= repository.getCategoryById(id);
        category.setTitle(dto.title());
        repository.save(category);

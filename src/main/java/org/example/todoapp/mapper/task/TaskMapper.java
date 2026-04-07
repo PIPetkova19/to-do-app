@@ -1,29 +1,31 @@
 package org.example.todoapp.mapper.task;
 
-import org.example.todoapp.dto.task.TaskRequestDTO;
-import org.example.todoapp.dto.task.TaskResponseDTO;
+import org.example.todoapp.dto.category.CategoryResponseDto;
+import org.example.todoapp.dto.task.TaskRequestDto;
+import org.example.todoapp.dto.task.TaskResponseDto;
+import org.example.todoapp.dto.user.UserResponseDto;
+import org.example.todoapp.model.Category;
 import org.example.todoapp.model.Task;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-
 @Component
 public class TaskMapper {
-    public TaskResponseDTO toDTO(Task task) {
-     return new TaskResponseDTO(task.getId(),task.getTitle(),
+    public TaskResponseDto toDto(Task task) {
+     return new TaskResponseDto(task.getId(),task.getTitle(),
              task.getDescription(),task.getDueDate(),
-             task.getPriority(),task.getStatus(),task.getCategory());
+             task.getPriority(),task.getStatus(),
+             new CategoryResponseDto(task.getCategory().getId(), task.getCategory().getTitle()),
+             new UserResponseDto(task.getUser().getId(), task.getUser().getName(), task.getUser().getEmail()));
     }
-//? trqbva li da setvam category ottuk
 
-    public Task toEntity(TaskRequestDTO dto) {
+    public Task toEntity(TaskRequestDto dto) {
         Task task = new Task();
         task.setTitle(dto.title());
         task.setDescription(dto.description());
         task.setDueDate(dto.dueDate());
         task.setPriority(dto.priority());
         task.setStatus(dto.status());
-        task.setCategory(dto.category());
+        //bez category i user !! v service
         return task;
     }
 }

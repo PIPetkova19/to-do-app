@@ -1,7 +1,7 @@
 package org.example.todoapp.service;
 
-import org.example.todoapp.dto.task.TaskRequestDTO;
-import org.example.todoapp.dto.task.TaskResponseDTO;
+import org.example.todoapp.dto.task.TaskRequestDto;
+import org.example.todoapp.dto.task.TaskResponseDto;
 import org.example.todoapp.mapper.task.TaskMapper;
 import org.example.todoapp.model.Task;
 import org.example.todoapp.repository.CategoryRepository;
@@ -31,23 +31,25 @@ public class TaskService {
     }
 
     @Transactional
-    public void save(TaskRequestDTO dto) {
+    public void save(TaskRequestDto dto) {
         Task task = mapper.toEntity(dto);
+        task.setCategory(categoryRepository.getCategoryById(dto.categoryId()));
+        task.setUser(userRepository.getUserById(dto.userId()));
         taskRepository.save(task);
         System.out.println("Saved task: " + task);
     }
 
     @Transactional(readOnly = true)
-    public TaskResponseDTO getById(Long id) {
-        return mapper.toDTO(taskRepository.getTaskById(id));
+    public TaskResponseDto getById(Long id) {
+        return mapper.toDto(taskRepository.getTaskById(id));
     }
 
     @Transactional(readOnly = true)
-    public List<TaskResponseDTO> getAll() {
+    public List<TaskResponseDto> getAll() {
         return taskRepository
                 .findAll()
                 .stream()
-                .map(mapper::toDTO)
+                .map(mapper::toDto)
                 .toList();
     }
 
@@ -58,7 +60,7 @@ public class TaskService {
     }
 
     @Transactional
-    public void update(Long id, TaskRequestDTO dto) {
+    public void update(Long id, TaskRequestDto dto) {
         Task task = taskRepository.getTaskById(id);
         task.setTitle(dto.title());
         task.setDescription(dto.description());

@@ -5,7 +5,7 @@ import org.example.todoapp.model.Status;
 
 import java.time.LocalDate;
 
-public record TaskRequestDTO(String title, String description,
+public record TaskRequestDto(String title, String description,
                              LocalDate dueDate, Priority priority,
                              Status status, Long categoryId,
                              Long userId) { }

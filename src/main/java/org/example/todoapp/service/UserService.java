@@ -1,7 +1,7 @@
 package org.example.todoapp.service;
 
-import org.example.todoapp.dto.user.UserRequestDTO;
-import org.example.todoapp.dto.user.UserResponseDTO;
+import org.example.todoapp.dto.user.UserRequestDto;
+import org.example.todoapp.dto.user.UserResponseDto;
 import org.example.todoapp.mapper.user.UserMapper;
 import org.example.todoapp.model.User;
 import org.example.todoapp.repository.UserRepository;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 //try catxhs
 
@@ -27,28 +26,28 @@ public class UserService {
     }
 
     @Transactional
-    public void save(UserRequestDTO dto) {
+    public void save(UserRequestDto dto) {
         User user = userMapper.toEntity(dto);
         userRepository.save(user);
         System.out.println("Saved user: " + user);
     }
 
     @Transactional(readOnly = true)
-    public UserResponseDTO getById(Long id) {
-        return userMapper.toDTO(userRepository.getUserById(id));
+    public UserResponseDto getById(Long id) {
+        return userMapper.toDto(userRepository.getUserById(id));
     }
 
     @Transactional(readOnly = true)
-    public List<UserResponseDTO> getAll() {
+    public List<UserResponseDto> getAll() {
        return userRepository
                .findAll()
                .stream()
-               .map(userMapper::toDTO)
+               .map(userMapper::toDto)
                .toList();
     }
 
     @Transactional
-    public void update(Long id, UserRequestDTO dto) {
+    public void update(Long id, UserRequestDto dto) {
         User user = userRepository.getUserById(id);
         user.setName(dto.name());
         user.setEmail(dto.email());
