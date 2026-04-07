@@ -3,10 +3,12 @@ package org.example.todoapp.service;
 import org.example.todoapp.dto.task.TaskRequestDTO;
 import org.example.todoapp.dto.task.TaskResponseDTO;
 import org.example.todoapp.mapper.task.TaskMapper;
+import org.example.todoapp.model.Status;
 import org.example.todoapp.model.Task;
 import org.example.todoapp.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 //crud
@@ -33,9 +35,11 @@ public class TaskService {
     }
 
     public List<TaskResponseDTO> getAll() {
-        List<Task> tasks = repository.findAll();
-        //mapper list
-        return null;
+        return repository
+                .findAll()
+                .stream()
+                .map(mapper::toDTO)
+                .toList();
     }
 
     public void delete(Long id) {
@@ -43,8 +47,15 @@ public class TaskService {
         System.out.println("Deleted task: " + repository.getTaskById(id).getTitle());
     }
 
-    public void update(Long id,TaskRequestDTO dto) {
-
-       // System.out.println("Updated task: " + task);
+    public void update(Long id, TaskRequestDTO dto) {
+        Task task = repository.getTaskById(id);
+        task.setTitle(dto.title());
+        task.setDescription(dto.description());
+        task.setDueDate(dto.dueDate());
+        task.setPriority(dto.priority());
+        task.setStatus(dto.status());
+        task.setCategory(dto.category());
+        repository.save(task);
+        System.out.println("Updated task: " + task.getTitle());
     }
 }

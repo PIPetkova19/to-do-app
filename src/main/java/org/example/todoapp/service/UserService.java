@@ -8,6 +8,7 @@ import org.example.todoapp.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -30,18 +31,23 @@ public class UserService {
     }
 
     public List<UserResponseDTO> getAll() {
-        return null;
-        //dovarsh
+       return userRepository
+               .findAll()
+               .stream()
+               .map(userMapper::toDTO)
+               .collect(Collectors.toList());
     }
 
-    public void update(UserRequestDTO dto) {
-        User user = userMapper.toEntity(dto);
-        userRepository.save(user);//?
+    public void update(Long id, UserRequestDTO dto) {
+        User user = userRepository.getUserById(id);
+        user.setName(dto.name());
+        user.setEmail(dto.email());
+        userRepository.save(user);
+        System.out.println("Updated user: " + user);
     }
 
-    public void delete(UserRequestDTO dto) {
-        User user = userMapper.toEntity(dto);
-        userRepository.delete(user);//raz;icni
-        System.out.println("Deleted user: " + user);
+    public void delete(Long id) {
+        userRepository.deleteById(id);
+        System.out.println("Deleted user: " + userRepository.getUserById(id).getName());
     }
 }

@@ -25,9 +25,12 @@ public class CategoryService {
         System.out.println("Saved Category: " + category.getTitle());
     }
 
-    public List<Category> getAll() {
-       //func v mapper
-        return null;
+    public List<CategoryResponseDTO> getAll() {
+       return repository
+               .findAll()
+               .stream()
+               .map(mapper::toDTO)
+               .toList();
     }
 
     public CategoryResponseDTO getById(Long id) {
@@ -40,7 +43,10 @@ public class CategoryService {
         System.out.println("Deleted Category: " + repository.getCategoryById(id).getTitle());
     }
 
-    public void update(CategoryRequestDTO dto) {
-        //?
+    public void update(Long id, CategoryRequestDTO dto) {
+       Category category= repository.getCategoryById(id);
+       category.setTitle(dto.title());
+       repository.save(category);
+        System.out.println("Updated Category: " + category.getTitle());
     }
 }
