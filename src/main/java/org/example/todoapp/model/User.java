@@ -13,9 +13,11 @@ public class User {
     private String name;
     private String email;
 
-    @OneToMany(mappedBy = "user",
+    @OneToMany(
+            mappedBy = "user",
             cascade = CascadeType.ALL,
-            orphanRemoval = true)
+            orphanRemoval = true
+    )
     List<Task> tasks;
 
     public User() {}
@@ -51,5 +53,15 @@ public class User {
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public void addTask(Task task) {
+        tasks.add(task);
+        task.setUser(this);
+    }
+
+    public void removeTask(Task task) {
+        tasks.remove(task);
+        task.setUser(null);
     }
 }

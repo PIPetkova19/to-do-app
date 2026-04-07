@@ -21,10 +21,12 @@ public class Task {
     private Status status;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
     private Category category;
 
     @ManyToOne(fetch = FetchType.LAZY)
-private User user;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Task() {}
 
@@ -39,7 +41,7 @@ private User user;
         this.category = category;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -89,5 +91,13 @@ private User user;
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

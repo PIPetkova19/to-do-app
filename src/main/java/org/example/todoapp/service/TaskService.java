@@ -3,12 +3,13 @@ package org.example.todoapp.service;
 import org.example.todoapp.dto.task.TaskRequestDTO;
 import org.example.todoapp.dto.task.TaskResponseDTO;
 import org.example.todoapp.mapper.task.TaskMapper;
-import org.example.todoapp.model.Status;
 import org.example.todoapp.model.Task;
+import org.example.todoapp.repository.CategoryRepository;
 import org.example.todoapp.repository.TaskRepository;
+import org.example.todoapp.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 
 //crud
@@ -16,46 +17,57 @@ import java.util.List;
 @Service
 public class TaskService {
 
-    private final TaskRepository repository;
+    private final TaskRepository taskRepository;
+    private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
     private final TaskMapper mapper;
 
-    public TaskService(TaskRepository repository, TaskMapper mapper) {
-        this.repository = repository;
+    public TaskService(TaskRepository taskRepository, TaskMapper mapper,
+                       UserRepository userRepository, CategoryRepository categoryRepository) {
+        this.taskRepository = taskRepository;
         this.mapper = mapper;
+        this.userRepository = userRepository;
+        this.categoryRepository = categoryRepository;
     }
 
+    @Transactional
     public void save(TaskRequestDTO dto) {
         Task task = mapper.toEntity(dto);
-        repository.save(task);
+        taskRepository.save(task);
         System.out.println("Saved task: " + task);
     }
 
+    @Transactional(readOnly = true)
     public TaskResponseDTO getById(Long id) {
-        return mapper.toDTO(repository.getTaskById(id));
+        return mapper.toDTO(taskRepository.getTaskById(id));
     }
 
+    @Transactional(readOnly = true)
     public List<TaskResponseDTO> getAll() {
-        return repository
+        return taskRepository
                 .findAll()
                 .stream()
                 .map(mapper::toDTO)
                 .toList();
     }
 
+    @Transactional
     public void delete(Long id) {
-        repository.deleteById(id);
-        System.out.println("Deleted task: " + repository.getTaskById(id).getTitle());
+        taskRepository.deleteById(id);
+        System.out.println("Deleted task");
     }
 
+    @Transactional
     public void update(Long id, TaskRequestDTO dto) {
-        Task task = repository.getTaskById(id);
+        Task task = taskRepository.getTaskById(id);
         task.setTitle(dto.title());
         task.setDescription(dto.description());
         task.setDueDate(dto.dueDate());
         task.setPriority(dto.priority());
         task.setStatus(dto.status());
-        task.setCategory(dto.category());
-        repository.save(task);
+        task.setCategory(categoryRepository.getCategoryById(dto.categoryId()));
+        task.setUser(userRepository.getUserById(dto.userId()));
+        taskRepository.save(task);
         System.out.println("Updated task: " + task.getTitle());
     }
 }

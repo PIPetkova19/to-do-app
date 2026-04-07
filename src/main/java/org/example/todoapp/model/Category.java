@@ -12,9 +12,11 @@ public class Category {
 
     private String title;
 
-    @OneToMany(mappedBy = "category",
+    @OneToMany(
+            mappedBy = "category",
             cascade = CascadeType.ALL,
-            orphanRemoval = true)
+            orphanRemoval = true
+    )
     private List<Task> tasks;
 
     public Category() {}
@@ -23,7 +25,7 @@ public class Category {
         this.title = title;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
