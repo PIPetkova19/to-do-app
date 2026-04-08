@@ -2,8 +2,6 @@ package org.example.todoapp.controller;
 
 import org.example.todoapp.dto.user.UserRequestDto;
 import org.example.todoapp.dto.user.UserResponseDto;
-import org.example.todoapp.model.User;
-import org.example.todoapp.repository.UserRepository;
 import org.example.todoapp.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
