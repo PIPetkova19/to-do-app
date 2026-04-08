@@ -1,6 +1,7 @@
 package org.example.todoapp.dto.task;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.example.todoapp.model.Priority;
 import org.example.todoapp.model.Status;
 
@@ -11,11 +12,11 @@ public record TaskRequestDto(
         String title,
         String description,
         LocalDate dueDate,
-        @NotBlank(message = "Priority is required!")
+        @NotNull(message = "Priority is required!")
         Priority priority,
-        @NotBlank(message = "Status is required!")
+        @NotNull(message = "Status is required!")
         Status status,
-        @NotBlank(message = "Category is required!")
+        @NotNull(message = "Category is required!")
         Long categoryId,
-        @NotBlank(message = "User is required!")
+        @NotNull(message = "User is required!")
         Long userId) { }
