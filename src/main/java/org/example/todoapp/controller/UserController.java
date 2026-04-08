@@ -1,5 +1,6 @@
 package org.example.todoapp.controller;
 
+import jakarta.validation.Valid;
 import org.example.todoapp.dto.user.UserRequestDto;
 import org.example.todoapp.dto.user.UserResponseDto;
 import org.example.todoapp.service.UserService;
@@ -29,12 +30,12 @@ public class UserController {
     }
 
     @PostMapping
-    public void createUser(@RequestBody UserRequestDto dto) {
+    public void createUser(@Valid @RequestBody UserRequestDto dto) {
         userService.save(dto);
     }
 
     @PutMapping("/{id}")
-    public void updateUser(@PathVariable Long id, @RequestBody UserRequestDto dto) {
+    public void updateUser(@PathVariable Long id,@Valid @RequestBody UserRequestDto dto) {
         userService.update(id,dto);
     }
 

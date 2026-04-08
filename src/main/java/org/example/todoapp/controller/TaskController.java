@@ -1,5 +1,6 @@
 package org.example.todoapp.controller;
 
+import jakarta.validation.Valid;
 import org.example.todoapp.dto.task.TaskRequestDto;
 import org.example.todoapp.dto.task.TaskResponseDto;
 import org.example.todoapp.service.TaskService;
@@ -27,12 +28,12 @@ public class TaskController {
     }
 
     @PostMapping
-    public void createTask(@RequestBody TaskRequestDto dto) {
+    public void createTask(@Valid @RequestBody TaskRequestDto dto) {
         taskService.save(dto);
     }
 
     @PutMapping("/{id}")
-    public void updateTask(@PathVariable Long id, @RequestBody TaskRequestDto dto) {
+    public void updateTask(@PathVariable Long id,@Valid @RequestBody TaskRequestDto dto) {
         taskService.update(id,dto);
     }
 

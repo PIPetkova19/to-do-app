@@ -1,4 +1,7 @@
 package org.example.todoapp.dto.category;
 
-public record CategoryRequestDto(String title) {}
-//validacii!
+import jakarta.validation.constraints.NotBlank;
+
+public record CategoryRequestDto(
+        @NotBlank(message = "Title is required!")
+        String title) {}

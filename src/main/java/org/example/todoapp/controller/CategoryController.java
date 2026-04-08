@@ -1,5 +1,6 @@
 package org.example.todoapp.controller;
 
+import jakarta.validation.Valid;
 import org.example.todoapp.dto.category.CategoryRequestDto;
 import org.example.todoapp.dto.category.CategoryResponseDto;
 import org.example.todoapp.service.CategoryService;
@@ -27,12 +28,12 @@ public class CategoryController {
     }
 
     @PostMapping
-    public void createCategory(@RequestBody CategoryRequestDto dto) {
+    public void createCategory(@Valid @RequestBody CategoryRequestDto dto) {
         categoryService.save(dto);
     }
 
     @PutMapping("/{id}")
-    public void updateCategory(@PathVariable Long id, @RequestBody CategoryRequestDto dto) {
+    public void updateCategory(@PathVariable Long id,@Valid @RequestBody CategoryRequestDto dto) {
         categoryService.update(id,dto);
     }
 
