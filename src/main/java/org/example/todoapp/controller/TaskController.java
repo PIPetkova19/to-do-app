@@ -41,4 +41,9 @@ public class TaskController {
     public void deleteTask(@PathVariable Long id) {
         taskService.delete(id);
     }
+
+    @GetMapping("/filter")
+    public List<TaskResponseDto> filter(@RequestParam String type,@RequestParam String value) {
+        return taskService.applyFilter(type,value);
+    }
 }
