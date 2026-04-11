@@ -7,10 +7,12 @@ import java.util.List;
 
 @Component
 public class FilterByUser implements TaskFilterStrategy{
+
     @Override
     public String getKey() {
         return "user";
     }
+
     @Override
     public List<Task> filter(List<Task> tasks,String value)
     {

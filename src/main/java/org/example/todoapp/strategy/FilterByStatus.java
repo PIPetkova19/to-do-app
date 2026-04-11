@@ -7,10 +7,12 @@ import java.util.List;
 
 @Component
 public class FilterByStatus implements TaskFilterStrategy{
+
     @Override
     public String getKey() {
         return "status";
     }
+
     @Override
     public List<Task> filter(List<Task> tasks, String value) {
         return tasks

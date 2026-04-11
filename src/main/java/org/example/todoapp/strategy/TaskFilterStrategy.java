@@ -5,6 +5,6 @@ import org.example.todoapp.model.Task;
 import java.util.List;
 
 public interface TaskFilterStrategy {
-    public List<Task> filter(List<Task> tasks, String value);
+    List<Task> filter(List<Task> tasks, String value);
     String getKey();
 }

@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-//crud
-//filter by category; priority
 @Service
 public class TaskService {
 
@@ -35,7 +33,11 @@ public class TaskService {
         this.categoryRepository = categoryRepository;
         this.strategyMap = strategies.stream()
                 .collect(Collectors.toMap(TaskFilterStrategy::getKey, s -> s));
-
+/*
+for (TaskFilterStrategy strategy : strategies) {
+    this.strategyMap.put(strategy.getKey(), strategy);
+}
+*/
     }
 
     @Transactional

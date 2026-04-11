@@ -22,6 +22,12 @@ public class Category {
 
     public Category() {}
 
+    //tests
+    public Category(Long id, String title) {
+        this.id = id;
+        this.title = title;
+    }
+
     public Category(String title) {
         this.title = title;
     }

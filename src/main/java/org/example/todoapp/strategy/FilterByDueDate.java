@@ -8,10 +8,12 @@ import java.util.List;
 
 @Component
 public class FilterByDueDate implements TaskFilterStrategy{
+
     @Override
     public String getKey() {
         return "dueDate";
     }
+
     @Override
     public List<Task> filter(List<Task> tasks, String value) {
         return tasks
