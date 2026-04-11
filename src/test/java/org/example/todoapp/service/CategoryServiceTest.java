@@ -1,12 +1,10 @@
-package org.example.todoapp;
+package org.example.todoapp.service;
 
 import org.example.todoapp.dto.category.CategoryRequestDto;
 import org.example.todoapp.dto.category.CategoryResponseDto;
-import org.example.todoapp.dto.user.UserResponseDto;
 import org.example.todoapp.mapper.category.CategoryMapper;
 import org.example.todoapp.model.Category;
 import org.example.todoapp.repository.CategoryRepository;
-import org.example.todoapp.service.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -85,7 +83,7 @@ public class CategoryServiceTest {
     }
 
     @Test
-    void should_getAll_Categories() {
+    void should_getAll_categories() {
         when(categoryRepository.findAll()).thenReturn(List.of(category));
         when(categoryMapper.toDto(category)).thenReturn(responseDto);
 

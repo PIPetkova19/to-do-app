@@ -1,11 +1,10 @@
-package org.example.todoapp;
+package org.example.todoapp.service;
 
 import org.example.todoapp.dto.user.UserRequestDto;
 import org.example.todoapp.dto.user.UserResponseDto;
 import org.example.todoapp.mapper.user.UserMapper;
 import org.example.todoapp.model.User;
 import org.example.todoapp.repository.UserRepository;
-import org.example.todoapp.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

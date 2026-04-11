@@ -44,6 +44,17 @@ public class Task {
         this.category = category;
     }
 
+    public Task(Long id, String title, String description, LocalDate dueDate, Priority priority, Status status, Category category, User user) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.priority = priority;
+        this.status = status;
+        this.category = category;
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }
