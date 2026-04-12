@@ -3,15 +3,12 @@ package org.example.todoapp.mapper.category;
 import org.example.todoapp.dto.category.CategoryRequestDto;
 import org.example.todoapp.dto.category.CategoryResponseDto;
 import org.example.todoapp.model.Category;
+import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
-@Component
-public class CategoryMapper {
-    public CategoryResponseDto toDto(Category category) {
-        return new CategoryResponseDto(category.getId(),category.getTitle());
-    }
+@Mapper(componentModel = "spring")
+public interface CategoryMapper {
+    CategoryResponseDto toDto(Category category);
 
-    public Category toEntity(CategoryRequestDto dto) {
-        return new Category(dto.title());
-    }
+    Category toEntity(CategoryRequestDto dto);
 }

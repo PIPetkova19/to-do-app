@@ -9,6 +9,6 @@ import java.time.LocalDate;
 
 public record TaskResponseDto(Long id, String title, String description,
                               LocalDate dueDate, Priority priority,
-                              Status status, CategoryResponseDto category
-                              , UserResponseDto user){}
+                              Status status, CategoryResponseDto category,
+                              UserResponseDto user){}
 
