@@ -62,6 +62,8 @@ public class TaskServiceTest {
                 HIGH, TODO, categoryResponseDto, userResponseDto);
         requestDto = new TaskRequestDto("math homework", "page 256",
                 LocalDate.of(2026, 4, 11), HIGH, TODO, 1L, 1L);
+
+
     }
 
     @Test
@@ -109,28 +111,20 @@ public class TaskServiceTest {
         verify(taskRepository).save(newTask);
     }
 
-    //getAll
-
-    /*
-    *    public List<TaskResponseDto> applyFilter(String type,String value)
-    {
-        TaskFilterStrategy strategy = strategyMap.get(type);
-
-        return strategy.filter(taskRepository.findAll(), value)
-                .stream()
-                .map(mapper::toDto)
-                .toList();
-    }*/
-
-   /* @Test
-    public void should_applyFilter() {
-        String type = "title";
-        String value = "math homework";
-        TaskFilterStrategy strategy= Map.of(("title",))
+    @Test
+    public void should_getAll_tasks() {
         when(taskRepository.findAll()).thenReturn(List.of(task));
+        when(taskMapper.toDto(task)).thenReturn(responseDto);
 
-        List<TaskResponseDto> taskResponseDtos = taskService.applyFilter(type, value);
+        List<TaskResponseDto> result = taskService.getAll();
 
-        verify
-    }*/
+        assertEquals(1, result.size());
+        assertEquals(responseDto, result.getFirst());
+
+        verify(taskRepository).findAll();
+        verify(taskMapper).toDto(task);
+    }
+
+    //apply filter
+
 }
