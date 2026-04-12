@@ -117,15 +117,8 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", dueDate=" + dueDate +
-                ", priority=" + priority +
-                ", status=" + status +
-                ", category=" + category +
-                ", user=" + user +
-                '}';
+        return String.format("Task [id=%s, title=%s, description=%s, dueDate=%s, " +
+                "priority=%s, status=%s, category=%s, user=%s]",
+                id, title, description, dueDate, priority, status, category, user);
     }
 }

@@ -74,4 +74,9 @@ public class User {
         tasks.remove(task);
         task.setUser(null);
     }
+
+    @Override
+    public String toString() {
+        return String.format("User [id=%s, name=%s, email=%s]", id, name, email);
+    }
 }

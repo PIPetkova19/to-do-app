@@ -8,22 +8,22 @@ import org.example.todoapp.mapper.task.TaskMapper;
 import org.example.todoapp.model.Category;
 import org.example.todoapp.model.Task;
 import org.example.todoapp.model.User;
+import org.example.todoapp.repository.CategoryRepository;
 import org.example.todoapp.repository.TaskRepository;
+import org.example.todoapp.repository.UserRepository;
 import org.example.todoapp.strategy.TaskFilterStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
-
 import static org.example.todoapp.model.Priority.HIGH;
 import static org.example.todoapp.model.Status.TODO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -33,16 +33,22 @@ public class TaskServiceTest {
     @Mock
     private TaskRepository taskRepository;
 
-    @InjectMocks
+    @Mock
+    private UserRepository userRepository;
+
+    @Mock
+    private CategoryRepository categoryRepository;
+
     private TaskService taskService;
 
     @Mock
     private TaskMapper taskMapper;
 
+    @Mock
+    private TaskFilterStrategy strategy;
+
     private Category category;
-    private CategoryResponseDto categoryResponseDto;
     private User user;
-    private UserResponseDto userResponseDto;
     private Task task;
     private TaskResponseDto responseDto;
     private TaskRequestDto requestDto;
@@ -50,10 +56,10 @@ public class TaskServiceTest {
     @BeforeEach
     public void setup() {
         category = new Category(1L, "school");
-        categoryResponseDto = new CategoryResponseDto(1L, "school");
+        CategoryResponseDto categoryResponseDto = new CategoryResponseDto(1L, "school");
 
         user = new User(1L, "petya", "p@gmail.com");
-        userResponseDto = new UserResponseDto(1L, "petya", "p@gmail.com");
+        UserResponseDto userResponseDto = new UserResponseDto(1L, "petya", "p@gmail.com");
 
         task = new Task(1L, "math homework", "page 256",
                 LocalDate.of(2026, 4, 11), HIGH, TODO, category, user);
@@ -63,7 +69,15 @@ public class TaskServiceTest {
         requestDto = new TaskRequestDto("math homework", "page 256",
                 LocalDate.of(2026, 4, 11), HIGH, TODO, 1L, 1L);
 
+        when(strategy.getKey()).thenReturn("title");
 
+        taskService = new TaskService(
+                taskRepository,
+                taskMapper,
+                userRepository,
+                categoryRepository,
+                List.of(strategy)
+        );
     }
 
     @Test
@@ -72,7 +86,7 @@ public class TaskServiceTest {
 
         taskService.save(requestDto);
 
-        verify(taskService).save(requestDto);
+        verify(taskRepository).save(task);
         verify(taskMapper).toEntity(requestDto);
     }
 
@@ -85,14 +99,12 @@ public class TaskServiceTest {
 
         assertEquals(newTask, responseDto);
 
-        verify(taskService).getById(1L);
+        verify(taskRepository).getTaskById(1L);
         verify(taskMapper).toDto(task);
     }
 
     @Test
     public void should_delete_task() {
-        when(taskRepository.getTaskById(1L)).thenReturn(task);
-
         taskService.delete(1L);
 
         verify(taskRepository).deleteById(1L);
@@ -125,6 +137,24 @@ public class TaskServiceTest {
         verify(taskMapper).toDto(task);
     }
 
-    //apply filter
+    @Test
+    void should_applyFilter() {
+        Task task2 = new Task(1L, "clean car", "inside & outside",
+                LocalDate.of(2026, 4, 11), HIGH, TODO, category, user);
 
+        when(taskRepository.findAll()).thenReturn(List.of(task, task2));
+        when(taskMapper.toDto(task2)).thenReturn(responseDto);
+        when(strategy.filter(anyList(), eq("title 1")))
+                .thenReturn(List.of(task2));
+
+        List<TaskResponseDto> result =
+                taskService.applyFilter("title", "title 1");
+
+        assertEquals(1, result.size());
+        assertEquals(responseDto, result.getFirst());
+
+        verify(taskRepository).findAll();
+        verify(strategy).filter(anyList(), eq("title 1"));
+        verify(taskMapper).toDto(task2);
+    }
 }

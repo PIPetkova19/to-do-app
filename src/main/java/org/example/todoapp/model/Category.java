@@ -61,4 +61,9 @@ public class Category {
         tasks.remove(task);
         task.setCategory(null);
     }
+
+    @Override
+    public String toString() {
+        return String.format("Category [id=%s, title=%s]", id, title);
+    }
 }
