@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class FilterByCategoryTest {
     @Test
     public void should_filter_byCategory(){
-        User user=new User(1L,"petya","p@gmail.com");
+        User user=new User(1L,"petya","petkova","p@gmail.com");
         Category category1 = new Category(1L,"work");
         Category category2 = new Category(2L,"school");
         Task task1=new Task(1L,"title","desc",

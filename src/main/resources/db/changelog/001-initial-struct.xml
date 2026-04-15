@@ -19,9 +19,9 @@
         </createTable>
     </changeSet>
     <changeSet id="1775669487048-2" author="Petya">
-        <createTable tableName="category">
+        <createTable tableName="categories">
             <column autoIncrement="true" name="id" type="BIGINT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_category"/>
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_categories"/>
             </column>
             <column name="title" type="VARCHAR(255)">
                 <constraints nullable="false"/>
@@ -29,9 +29,9 @@
         </createTable>
     </changeSet>
     <changeSet id="1775669487048-3" author="Petya">
-        <createTable tableName="task">
+        <createTable tableName="tasks">
             <column autoIncrement="true" name="id" type="BIGINT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_task"/>
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_tasks"/>
             </column>
             <column name="title" type="VARCHAR(255)">
                 <constraints nullable="false"/>
@@ -56,11 +56,11 @@
         <addUniqueConstraint columnNames="email" constraintName="uc_users_email" tableName="users"/>
     </changeSet>
     <changeSet id="1775669487048-5" author="Petya">
-        <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="task" constraintName="FK_TASK_ON_CATEGORY"
-                                 referencedColumnNames="id" referencedTableName="category"/>
+        <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="tasks" constraintName="FK_TASK_ON_CATEGORY"
+                                 referencedColumnNames="id" referencedTableName="categories"/>
     </changeSet>
     <changeSet id="1775669487048-6" author="Petya">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="task" constraintName="FK_TASK_ON_USER"
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="tasks" constraintName="FK_TASK_ON_USER"
                                  referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
 

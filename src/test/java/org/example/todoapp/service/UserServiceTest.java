@@ -35,9 +35,9 @@ public class UserServiceTest {
 
     @BeforeEach
     public void setup() {
-        userResponseDto=new UserResponseDto(1L,"petya","p@gmail.com");
-        userRequestDto = new UserRequestDto("petya", "p@gmail.com");
-        user = new User(1L,"petya", "p@gmail.com");
+        userResponseDto=new UserResponseDto(1L,"petya petkova","p@gmail.com");
+        userRequestDto = new UserRequestDto("petya", "petkova","p@gmail.com");
+        user = new User(1L,"petya","petkova", "p@gmail.com");
     }
 
     @Test
@@ -79,12 +79,12 @@ public class UserServiceTest {
 
     @Test
     void should_update_user() {
-        User newUser=new User(1L,"rado","r@gmail.com");
+        User newUser=new User(1L,"rado","ivanov","r@gmail.com");
         when(userRepository.getUserById(1L)).thenReturn(newUser);
 
         userService.update(1L, userRequestDto);
 
-        assertEquals("petya",newUser.getName());
+        assertEquals("petya",newUser.getFirstName());
         assertEquals("p@gmail.com",newUser.getEmail());
 
         verify(userRepository).save(newUser);

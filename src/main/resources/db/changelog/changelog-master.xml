@@ -4,6 +4,6 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <include file="db/changelog/08-01-changelog.xml"/>
-    <include file="db/changelog/15-04-changelog.xml"/>
+    <include file="/db/changelog/001-initial-struct.xml"/>
+    <include file="/db/changelog/002-add-columns-users.xml"/>
 </databaseChangeLog>

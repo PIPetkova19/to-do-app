@@ -5,6 +5,6 @@
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="0" author="admin">
-
+            <dropColumn tableName="users" columnName="name"/>
     </changeSet>
 </databaseChangeLog>

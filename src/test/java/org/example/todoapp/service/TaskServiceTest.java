@@ -58,8 +58,8 @@ public class TaskServiceTest {
         category = new Category(1L, "school");
         CategoryResponseDto categoryResponseDto = new CategoryResponseDto(1L, "school");
 
-        user = new User(1L, "petya", "p@gmail.com");
-        UserResponseDto userResponseDto = new UserResponseDto(1L, "petya", "p@gmail.com");
+        user = new User(1L, "petya", "petkova","p@gmail.com");
+        UserResponseDto userResponseDto = new UserResponseDto(1L, "petya petkova", "p@gmail.com");
 
         task = new Task(1L, "math homework", "page 256",
                 LocalDate.of(2026, 4, 11), HIGH, TODO, category, user);

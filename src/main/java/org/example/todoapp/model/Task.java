@@ -8,7 +8,7 @@ import java.time.LocalDate;
 @Table(name="tasks")
 public class Task {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -32,7 +32,8 @@ public class Task {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Task() {}
+    public Task() {
+    }
 
     public Task(String title, String description,
                 LocalDate dueDate, Priority priority,
@@ -45,7 +46,9 @@ public class Task {
         this.category = category;
     }
 
-    public Task(Long id, String title, String description, LocalDate dueDate, Priority priority, Status status, Category category, User user) {
+    //tests
+    public Task(Long id, String title, String description, LocalDate dueDate,
+                Priority priority, Status status, Category category, User user) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -119,7 +122,7 @@ public class Task {
     @Override
     public String toString() {
         return String.format("Task [id=%s, title=%s, description=%s, dueDate=%s, " +
-                "priority=%s, status=%s, category=%s, user=%s]",
+                        "priority=%s, status=%s, category=%s, user=%s]",
                 id, title, description, dueDate, priority, status, category, user);
     }
 }

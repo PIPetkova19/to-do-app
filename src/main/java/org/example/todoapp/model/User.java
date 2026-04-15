@@ -12,8 +12,12 @@ public class User {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
-    @Column(unique=true,nullable = false)
+    private String firstName;
+
+    @Column(nullable = false)
+    private String lastName;
+
+    @Column(unique=true, nullable = false)
     private String email;
 
     @OneToMany(
@@ -25,15 +29,17 @@ public class User {
 
     public User() {}
 
-    public User(String name, String email) {
-        this.name = name;
+    public User(String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
     }
 
     //tests
-    public User(Long id,String name, String email) {
+    public User(Long id,String firstName, String lastName, String email) {
         this.id = id;
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
     }
 
@@ -41,12 +47,20 @@ public class User {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -77,6 +91,6 @@ public class User {
 
     @Override
     public String toString() {
-        return String.format("User [id=%s, name=%s, email=%s]", id, name, email);
+        return String.format("User [id=%s, fullName=%s %s, email=%s]", id, firstName, lastName, email);
     }
 }

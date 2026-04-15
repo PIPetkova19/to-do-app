@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//vrashtane na response codes?
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -18,7 +17,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    // bez requestmapping @GetMapping("/users")
+    // bez requestMapping @GetMapping("/users")
     @GetMapping
     public List<UserResponseDto> getUsers() {
         return userService.getAll();

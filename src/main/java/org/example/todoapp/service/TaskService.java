@@ -8,7 +8,6 @@ import org.example.todoapp.repository.CategoryRepository;
 import org.example.todoapp.repository.TaskRepository;
 import org.example.todoapp.repository.UserRepository;
 import org.example.todoapp.strategy.TaskFilterStrategy;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,28 +21,28 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
-    private final TaskMapper mapper;
+    private final TaskMapper taskMapper;
     private final Map<String, TaskFilterStrategy> strategyMap;
 
-    public TaskService(TaskRepository taskRepository, TaskMapper mapper,
+    public TaskService(TaskRepository taskRepository, TaskMapper taskMapper,
                        UserRepository userRepository, CategoryRepository categoryRepository,
                        List<TaskFilterStrategy> strategies) {
         this.taskRepository = taskRepository;
-        this.mapper = mapper;
+        this.taskMapper = taskMapper;
         this.userRepository = userRepository;
         this.categoryRepository = categoryRepository;
         this.strategyMap = strategies.stream()
                 .collect(Collectors.toMap(TaskFilterStrategy::getKey, s -> s));
-/*
-for (TaskFilterStrategy strategy : strategies) {
-    this.strategyMap.put(strategy.getKey(), strategy);
-}
-*/
+        /*
+        for (TaskFilterStrategy strategy : strategies) {
+        this.strategyMap.put(strategy.getKey(), strategy);
+        }
+        */
     }
 
     @Transactional
     public void save(TaskRequestDto dto) {
-        Task task = mapper.toEntity(dto);
+        Task task = taskMapper.toEntity(dto);
         task.setCategory(categoryRepository.getCategoryById(dto.categoryId()));
         task.setUser(userRepository.getUserById(dto.userId()));
         taskRepository.save(task);
@@ -52,7 +51,7 @@ for (TaskFilterStrategy strategy : strategies) {
 
     @Transactional(readOnly = true)
     public TaskResponseDto getById(Long id) {
-        return mapper.toDto(taskRepository.getTaskById(id));
+        return taskMapper.toDto(taskRepository.getTaskById(id));
     }
 
     @Transactional(readOnly = true)
@@ -60,7 +59,7 @@ for (TaskFilterStrategy strategy : strategies) {
         return taskRepository
                 .findAll()
                 .stream()
-                .map(mapper::toDto)
+                .map(taskMapper::toDto)
                 .toList();
     }
 
@@ -90,7 +89,7 @@ for (TaskFilterStrategy strategy : strategies) {
 
         return strategy.filter(taskRepository.findAll(), value)
                 .stream()
-                .map(mapper::toDto)
+                .map(taskMapper::toDto)
                 .toList();
     }
 }

@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class FilterByTitleTest{
     @Test
     public void should_filter_byTitle(){
-        User user=new User(1L,"petya","p@gmail.com");
+        User user=new User(1L,"petya","petkova","p@gmail.com");
         Category category = new Category(1L,"work");
         Task task1=new Task(1L,"title 1","desc",
                 LocalDate.parse("2020-01-01"), Priority.HIGH, Status.TODO,category,user);

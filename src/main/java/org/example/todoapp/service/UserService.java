@@ -10,11 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-//try catxhs
-
-//transactional samo za uncehcked exceptions po defailt
-//t.e shte havne NullPointerException
-//Ако хвърляш "checked" ексепшъни (като IOException), трябва да ползваш @Transactional(rollbackFor = Exception.class).
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -49,7 +44,8 @@ public class UserService {
     @Transactional
     public void update(Long id, UserRequestDto dto) {
         User user = userRepository.getUserById(id);
-        user.setName(dto.name());
+        user.setFirstName(dto.firstName());
+        user.setLastName(dto.lastName());
         user.setEmail(dto.email());
         userRepository.save(user);
         System.out.println("Updated user: " + user);
