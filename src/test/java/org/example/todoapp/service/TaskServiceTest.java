@@ -19,6 +19,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+
 import static org.example.todoapp.model.Priority.HIGH;
 import static org.example.todoapp.model.Status.TODO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -148,7 +150,7 @@ public class TaskServiceTest {
                 .thenReturn(List.of(task2));
 
         List<TaskResponseDto> result =
-                taskService.applyFilter("title", "title 1");
+                taskService.applyFilter(Map.of("title","title 1"));
 
         assertEquals(1, result.size());
         assertEquals(responseDto, result.getFirst());

@@ -7,6 +7,7 @@ import org.example.todoapp.service.TaskService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -43,7 +44,7 @@ public class TaskController {
     }
 
     @GetMapping("/filter")
-    public List<TaskResponseDto> filter(@RequestParam String type,@RequestParam String value) {
-        return taskService.applyFilter(type,value);
+    public List<TaskResponseDto> filter(@RequestParam Map<String, String> filters) {
+        return taskService.applyFilter(filters);
     }
 }

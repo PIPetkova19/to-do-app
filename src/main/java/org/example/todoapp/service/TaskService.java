@@ -33,11 +33,6 @@ public class TaskService {
         this.categoryRepository = categoryRepository;
         this.strategyMap = strategies.stream()
                 .collect(Collectors.toMap(TaskFilterStrategy::getKey, s -> s));
-        /*
-        for (TaskFilterStrategy strategy : strategies) {
-        this.strategyMap.put(strategy.getKey(), strategy);
-        }
-        */
     }
 
     @Transactional
@@ -83,12 +78,19 @@ public class TaskService {
         System.out.println("Updated task: " + task.getTitle());
     }
 
-    public List<TaskResponseDto> applyFilter(String type,String value)
-    {
-        TaskFilterStrategy strategy = strategyMap.get(type);
+    //status(type)->done(value)
+    public List<TaskResponseDto> applyFilter(Map<String, String> filters) {
 
-        return strategy.filter(taskRepository.findAll(), value)
-                .stream()
+        List<Task> tasks = taskRepository.findAll();
+
+        for (Map.Entry<String, String> entry : filters.entrySet()) {
+            TaskFilterStrategy strategy = strategyMap.get(entry.getKey());
+            if (strategy != null) {
+                tasks = strategy.filter(tasks, entry.getValue());
+            }
+        }
+
+        return tasks.stream()
                 .map(taskMapper::toDto)
                 .toList();
     }
