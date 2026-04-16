@@ -71,8 +71,6 @@ public class TaskServiceTest {
         requestDto = new TaskRequestDto("math homework", "page 256",
                 LocalDate.of(2026, 4, 11), HIGH, TODO, 1L, 1L);
 
-        when(strategy.getKey()).thenReturn("title");
-
         taskService = new TaskService(
                 taskRepository,
                 taskMapper,
@@ -148,6 +146,7 @@ public class TaskServiceTest {
         when(taskMapper.toDto(task2)).thenReturn(responseDto);
         when(strategy.filter(anyList(), eq("title 1")))
                 .thenReturn(List.of(task2));
+        when(strategy.getKey()).thenReturn("title");
 
         List<TaskResponseDto> result =
                 taskService.applyFilter(Map.of("title","title 1"));
@@ -156,6 +155,7 @@ public class TaskServiceTest {
         assertEquals(responseDto, result.getFirst());
 
         verify(taskRepository).findAll();
+        verify(strategy).getKey();
         verify(strategy).filter(anyList(), eq("title 1"));
         verify(taskMapper).toDto(task2);
     }

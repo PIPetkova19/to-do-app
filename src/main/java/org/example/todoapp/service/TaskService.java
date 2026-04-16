@@ -22,7 +22,7 @@ public class TaskService {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final TaskMapper taskMapper;
-    private final Map<String, TaskFilterStrategy> strategyMap;
+    private final List<TaskFilterStrategy> strategies;
 
     public TaskService(TaskRepository taskRepository, TaskMapper taskMapper,
                        UserRepository userRepository, CategoryRepository categoryRepository,
@@ -31,8 +31,7 @@ public class TaskService {
         this.taskMapper = taskMapper;
         this.userRepository = userRepository;
         this.categoryRepository = categoryRepository;
-        this.strategyMap = strategies.stream()
-                .collect(Collectors.toMap(TaskFilterStrategy::getKey, s -> s));
+        this.strategies = strategies;
     }
 
     @Transactional
@@ -84,7 +83,11 @@ public class TaskService {
         List<Task> tasks = taskRepository.findAll();
 
         for (Map.Entry<String, String> entry : filters.entrySet()) {
-            TaskFilterStrategy strategy = strategyMap.get(entry.getKey());
+            TaskFilterStrategy strategy = strategies.stream()
+                    .filter(s -> s.getKey().equalsIgnoreCase(entry.getKey()))
+                    .findFirst()
+                    .orElse(null);
+
             if (strategy != null) {
                 tasks = strategy.filter(tasks, entry.getValue());
             }
