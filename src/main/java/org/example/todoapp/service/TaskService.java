@@ -1,19 +1,19 @@
 package org.example.todoapp.service;
 
-import org.example.todoapp.dto.task.TaskRequestDto;
-import org.example.todoapp.dto.task.TaskResponseDto;
-import org.example.todoapp.mapper.task.TaskMapper;
-import org.example.todoapp.model.Task;
-import org.example.todoapp.repository.CategoryRepository;
-import org.example.todoapp.repository.TaskRepository;
-import org.example.todoapp.repository.UserRepository;
-import org.example.todoapp.strategy.TaskFilterStrategy;
+import org.example.todoapp.task.TaskRequestDto;
+import org.example.todoapp.task.TaskResponseDto;
+import org.example.todoapp.common.exception.EntityNotFoundException;
+import org.example.todoapp.task.TaskMapper;
+import org.example.todoapp.task.Task;
+import org.example.todoapp.category.CategoryRepository;
+import org.example.todoapp.task.TaskRepository;
+import org.example.todoapp.user.UserRepository;
+import org.example.todoapp.task.strategy.TaskFilterStrategy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class TaskService {
@@ -37,15 +37,18 @@ public class TaskService {
     @Transactional
     public void save(TaskRequestDto dto) {
         Task task = taskMapper.toEntity(dto);
-        task.setCategory(categoryRepository.getCategoryById(dto.categoryId()));
-        task.setUser(userRepository.getUserById(dto.userId()));
+        task.setCategory(categoryRepository.findById(dto.categoryId())
+                .orElseThrow(()->new EntityNotFoundException("Category with id: " + dto.categoryId() + " not found")));
+        task.setUser(userRepository.findById(dto.userId())
+                .orElseThrow(()->new EntityNotFoundException("User with id: " + dto.userId() + " not found")));
         taskRepository.save(task);
         System.out.println("Saved task: " + task);
     }
 
     @Transactional(readOnly = true)
     public TaskResponseDto getById(Long id) {
-        return taskMapper.toDto(taskRepository.getTaskById(id));
+        return taskMapper.toDto(taskRepository.findById(id)
+                .orElseThrow(()->new EntityNotFoundException("Task with id: " + id + " not found")));
     }
 
     @Transactional(readOnly = true)
@@ -65,14 +68,17 @@ public class TaskService {
 
     @Transactional
     public void update(Long id, TaskRequestDto dto) {
-        Task task = taskRepository.getTaskById(id);
+        Task task = taskRepository.findById(id)
+                .orElseThrow(()->new EntityNotFoundException("Task with id: " + id + " not found"));
         task.setTitle(dto.title());
         task.setDescription(dto.description());
         task.setDueDate(dto.dueDate());
         task.setPriority(dto.priority());
         task.setStatus(dto.status());
-        task.setCategory(categoryRepository.getCategoryById(dto.categoryId()));
-        task.setUser(userRepository.getUserById(dto.userId()));
+        task.setCategory(categoryRepository.findById(dto.categoryId())
+                .orElseThrow(()->new EntityNotFoundException("Category with id: " + id + " not found")));
+        task.setUser(userRepository.findById(dto.userId())
+                .orElseThrow(()->new EntityNotFoundException("User with id: " + dto.userId() + " not found")));
         taskRepository.save(task);
         System.out.println("Updated task: " + task.getTitle());
     }

@@ -1,7 +1,12 @@
 package org.example.todoapp.strategy;
 
-import org.example.todoapp.model.*;
+import org.example.todoapp.category.Category;
+import org.example.todoapp.category.Priority;
+import org.example.todoapp.category.Status;
+import org.example.todoapp.task.Task;
+import org.example.todoapp.task.strategy.FilterByPriority;
 import org.junit.jupiter.api.Test;
+import user.User;
 
 import java.time.LocalDate;
 import java.util.List;

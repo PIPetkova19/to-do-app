@@ -1,18 +1,20 @@
 package org.example.todoapp.service;
 
-import org.example.todoapp.dto.user.UserRequestDto;
-import org.example.todoapp.dto.user.UserResponseDto;
-import org.example.todoapp.mapper.user.UserMapper;
-import org.example.todoapp.model.User;
-import org.example.todoapp.repository.UserRepository;
+import org.example.todoapp.user.UserRequestDto;
+import org.example.todoapp.user.UserResponseDto;
+import org.example.todoapp.user.UserMapper;
+import user.User;
+import org.example.todoapp.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.example.todoapp.user.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
@@ -52,7 +54,7 @@ public class UserServiceTest {
 
     @Test
     void should_getById_user() {
-        when(userRepository.getUserById(user.getId())).thenReturn(user);
+        when(userRepository.findById(user.getId())).thenReturn(Optional.ofNullable(user));
         when(userMapper.toDto(user)).thenReturn(userResponseDto);
 
         UserResponseDto newUser=userService.getById(user.getId());
@@ -60,7 +62,7 @@ public class UserServiceTest {
         assertEquals(userResponseDto,newUser);
 
         verify(userMapper).toDto(user);
-        verify(userRepository).getUserById(user.getId());
+        verify(userRepository).findById(user.getId());
     }
 
     @Test
@@ -80,7 +82,7 @@ public class UserServiceTest {
     @Test
     void should_update_user() {
         User newUser=new User(1L,"rado","ivanov","r@gmail.com");
-        when(userRepository.getUserById(1L)).thenReturn(newUser);
+        when(userRepository.findById(1L)).thenReturn(Optional.of(newUser));
 
         userService.update(1L, userRequestDto);
 

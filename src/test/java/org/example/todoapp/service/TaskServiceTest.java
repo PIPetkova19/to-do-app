@@ -1,17 +1,17 @@
 package org.example.todoapp.service;
 
-import org.example.todoapp.dto.category.CategoryResponseDto;
-import org.example.todoapp.dto.task.TaskRequestDto;
-import org.example.todoapp.dto.task.TaskResponseDto;
-import org.example.todoapp.dto.user.UserResponseDto;
-import org.example.todoapp.mapper.task.TaskMapper;
-import org.example.todoapp.model.Category;
-import org.example.todoapp.model.Task;
-import org.example.todoapp.model.User;
-import org.example.todoapp.repository.CategoryRepository;
-import org.example.todoapp.repository.TaskRepository;
-import org.example.todoapp.repository.UserRepository;
-import org.example.todoapp.strategy.TaskFilterStrategy;
+import org.example.todoapp.category.CategoryResponseDto;
+import org.example.todoapp.task.TaskRequestDto;
+import org.example.todoapp.task.TaskResponseDto;
+import org.example.todoapp.user.UserResponseDto;
+import org.example.todoapp.task.TaskMapper;
+import org.example.todoapp.category.Category;
+import org.example.todoapp.task.Task;
+import user.User;
+import org.example.todoapp.category.CategoryRepository;
+import org.example.todoapp.task.TaskRepository;
+import org.example.todoapp.user.UserRepository;
+import org.example.todoapp.task.strategy.TaskFilterStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,9 +20,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
-import static org.example.todoapp.model.Priority.HIGH;
-import static org.example.todoapp.model.Status.TODO;
+import static org.example.todoapp.category.Priority.HIGH;
+import static org.example.todoapp.category.Status.TODO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.eq;
@@ -92,14 +93,14 @@ public class TaskServiceTest {
 
     @Test
     public void should_getById_task() {
-        when(taskRepository.getTaskById(1L)).thenReturn(task);
+        when(taskRepository.findById(1L)).thenReturn(Optional.ofNullable(task));
         when(taskMapper.toDto(task)).thenReturn(responseDto);
 
         TaskResponseDto newTask = taskService.getById(1L);
 
         assertEquals(newTask, responseDto);
 
-        verify(taskRepository).getTaskById(1L);
+        verify(taskRepository).findById(1L);
         verify(taskMapper).toDto(task);
     }
 
@@ -114,7 +115,7 @@ public class TaskServiceTest {
     public void should_update_task() {
         Task newTask = new Task(1L, "math homework", "page 256",
                 LocalDate.of(2026, 4, 11), HIGH, TODO, category, user);
-        when(taskRepository.getTaskById(1L)).thenReturn(newTask);
+        when(taskRepository.findById(1L)).thenReturn(Optional.of(newTask));
 
         taskService.update(1L, requestDto);
 

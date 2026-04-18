@@ -1,10 +1,10 @@
 package org.example.todoapp.service;
 
-import org.example.todoapp.dto.category.CategoryRequestDto;
-import org.example.todoapp.dto.category.CategoryResponseDto;
-import org.example.todoapp.mapper.category.CategoryMapper;
-import org.example.todoapp.model.Category;
-import org.example.todoapp.repository.CategoryRepository;
+import org.example.todoapp.category.CategoryRequestDto;
+import org.example.todoapp.category.CategoryResponseDto;
+import org.example.todoapp.category.CategoryMapper;
+import org.example.todoapp.category.Category;
+import org.example.todoapp.category.CategoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
@@ -52,14 +53,14 @@ public class CategoryServiceTest {
 
     @Test
     public void should_getById_category() {
-        when(categoryRepository.getCategoryById(1L)).thenReturn(category);
+        when(categoryRepository.findById(1L)).thenReturn(Optional.ofNullable(category));
         when(categoryMapper.toDto(category)).thenReturn(responseDto);
 
         CategoryResponseDto newCategory=categoryService.getById(1L);
 
         assertEquals(newCategory,responseDto);
 
-        verify(categoryRepository).getCategoryById(1L);
+        verify(categoryRepository).findById(1L);
         verify(categoryMapper).toDto(category);
     }
 
@@ -73,7 +74,7 @@ public class CategoryServiceTest {
     @Test
     public void should_update_category() {
         Category newCategory = new Category( 1L,"school");
-        when(categoryRepository.getCategoryById(1L)).thenReturn(newCategory);
+        when(categoryRepository.findById(1L)).thenReturn(Optional.of(newCategory));
 
         categoryService.update(1L, requestDto);
 
