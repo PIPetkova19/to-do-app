@@ -1,8 +1,10 @@
 package org.example.todoapp.category;
 
 import jakarta.validation.Valid;
-import org.example.todoapp.service.CategoryService;
+import org.example.todoapp.common.exception.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -17,13 +19,22 @@ public class CategoryController {
 
     @GetMapping
     public List<CategoryResponseDto> getCategories() {
-        return categoryService.getAll();
+        try {
+            return categoryService.getAll();
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "No categories found.", e);
+        }
     }
 
     @GetMapping("/{id}")
     public CategoryResponseDto getCategory(@PathVariable Long id) {
-        return categoryService.getById(id);
-    }
+        try {
+            return categoryService.getById(id);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Category with id " + id + " not found.", e);
+        }    }
 
     @PostMapping
     public void createCategory(@Valid @RequestBody CategoryRequestDto dto) {

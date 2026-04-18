@@ -3,7 +3,7 @@ package org.example.todoapp.service;
 import org.example.todoapp.user.UserRequestDto;
 import org.example.todoapp.user.UserResponseDto;
 import org.example.todoapp.user.UserMapper;
-import user.User;
+import org.example.todoapp.user.*;
 import org.example.todoapp.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

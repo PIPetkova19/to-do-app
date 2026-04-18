@@ -1,8 +1,10 @@
 package org.example.todoapp.task;
 
 import jakarta.validation.Valid;
-import org.example.todoapp.service.TaskService;
+import org.example.todoapp.common.exception.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Map;
@@ -18,12 +20,22 @@ public class TaskController {
 
     @GetMapping
     public List<TaskResponseDto> getTasks() {
-        return taskService.getAll();
+        try {
+            return taskService.getAll();
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "No tasks found.", e);
+        }
     }
 
     @GetMapping("/{id}")
     public TaskResponseDto getTask(@PathVariable Long id) {
-        return taskService.getById(id);
+        try {
+            return taskService.getById(id);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Task with id "+id+" not found.", e);
+        }
     }
 
     @PostMapping

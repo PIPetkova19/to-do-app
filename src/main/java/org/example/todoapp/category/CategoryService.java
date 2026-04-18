@@ -1,11 +1,6 @@
-package org.example.todoapp.service;
+package org.example.todoapp.category;
 
-import org.example.todoapp.category.CategoryRequestDto;
-import org.example.todoapp.category.CategoryResponseDto;
 import org.example.todoapp.common.exception.EntityNotFoundException;
-import org.example.todoapp.category.CategoryMapper;
-import org.example.todoapp.category.Category;
-import org.example.todoapp.category.CategoryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

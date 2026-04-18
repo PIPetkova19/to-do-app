@@ -1,7 +1,10 @@
 package org.example.todoapp.user;
 
 import jakarta.validation.Valid;
+import org.example.todoapp.common.exception.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -17,12 +20,22 @@ public class UserController {
     // bez requestMapping @GetMapping("/users")
     @GetMapping
     public List<UserResponseDto> getUsers() {
-        return userService.getAll();
+        try {
+            return userService.getAll();
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "No tasks found.", e);
+        }
     }
 
     @GetMapping("/{id}")
     public UserResponseDto getUser(@PathVariable Long id) {
-        return userService.getById(id);
+        try {
+            return userService.getById(id);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "User with id "+id+" not found.", e);
+        }
     }
 
     @PostMapping

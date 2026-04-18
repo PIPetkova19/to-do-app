@@ -1,12 +1,7 @@
-package org.example.todoapp.service;
+package org.example.todoapp.task;
 
-import org.example.todoapp.task.TaskRequestDto;
-import org.example.todoapp.task.TaskResponseDto;
 import org.example.todoapp.common.exception.EntityNotFoundException;
-import org.example.todoapp.task.TaskMapper;
-import org.example.todoapp.task.Task;
 import org.example.todoapp.category.CategoryRepository;
-import org.example.todoapp.task.TaskRepository;
 import org.example.todoapp.user.UserRepository;
 import org.example.todoapp.task.strategy.TaskFilterStrategy;
 import org.springframework.stereotype.Service;

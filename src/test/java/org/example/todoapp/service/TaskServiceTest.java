@@ -1,15 +1,11 @@
 package org.example.todoapp.service;
 
 import org.example.todoapp.category.CategoryResponseDto;
-import org.example.todoapp.task.TaskRequestDto;
-import org.example.todoapp.task.TaskResponseDto;
+import org.example.todoapp.task.*;
 import org.example.todoapp.user.UserResponseDto;
-import org.example.todoapp.task.TaskMapper;
 import org.example.todoapp.category.Category;
-import org.example.todoapp.task.Task;
-import user.User;
+import org.example.todoapp.user.*;
 import org.example.todoapp.category.CategoryRepository;
-import org.example.todoapp.task.TaskRepository;
 import org.example.todoapp.user.UserRepository;
 import org.example.todoapp.task.strategy.TaskFilterStrategy;
 import org.junit.jupiter.api.BeforeEach;

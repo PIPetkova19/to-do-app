@@ -1,10 +1,6 @@
 package org.example.todoapp.service;
 
-import org.example.todoapp.category.CategoryRequestDto;
-import org.example.todoapp.category.CategoryResponseDto;
-import org.example.todoapp.category.CategoryMapper;
-import org.example.todoapp.category.Category;
-import org.example.todoapp.category.CategoryRepository;
+import org.example.todoapp.category.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
