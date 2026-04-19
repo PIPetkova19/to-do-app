@@ -64,7 +64,7 @@ public class UserService {
         for (Task task : tasks) {
             task.setAssignedUser(null);
         }
-        userRepository.deleteById(id);
+        userRepository.delete(user);
         System.out.println("Deleted user");
     }
 }
