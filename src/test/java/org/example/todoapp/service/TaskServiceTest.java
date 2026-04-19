@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class TaskServiceTest {
-/*
+
     @Mock
     private TaskRepository taskRepository;
 
@@ -47,7 +47,8 @@ public class TaskServiceTest {
     private TaskFilterStrategy strategy;
 
     private Category category;
-    private User user;
+    private User user1;
+    private User user2;
     private Task task;
     private TaskResponseDto responseDto;
     private TaskRequestDto requestDto;
@@ -57,16 +58,19 @@ public class TaskServiceTest {
         category = new Category(1L, "school");
         CategoryResponseDto categoryResponseDto = new CategoryResponseDto(1L, "school");
 
-        user = new User(1L, "petya", "petkova","p@gmail.com");
-        UserResponseDto userResponseDto = new UserResponseDto(1L, "petya petkova", "p@gmail.com");
+        user1 = new User(1L, "petya", "petkova","p@gmail.com");
+        user2 = new User(1L, "rado", "ivanov","r@gmail.com");
+
+        UserResponseDto userResponseDto1 = new UserResponseDto(1L, "petya petkova", "p@gmail.com");
+        UserResponseDto userResponseDto2 = new UserResponseDto(2L, "rado ivanov", "r@gmail.com");
 
         task = new Task(1L, "math homework", "page 256",
-                LocalDate.of(2026, 4, 11), HIGH, TODO, category, user);
+                LocalDate.of(2026, 4, 11), HIGH, TODO, category, user1);
         responseDto = new TaskResponseDto(1L, "math homework", "page 256",
                 LocalDate.of(2026, 4, 11),
-                HIGH, TODO, categoryResponseDto, userResponseDto);
+                HIGH, TODO, categoryResponseDto, userResponseDto1, userResponseDto2);
         requestDto = new TaskRequestDto("math homework", "page 256",
-                LocalDate.of(2026, 4, 11), HIGH, TODO, 1L, 1L);
+                LocalDate.of(2026, 4, 11), HIGH, TODO, 1L, 1L,2L);
 
         taskService = new TaskService(
                 taskRepository,
@@ -80,11 +84,21 @@ public class TaskServiceTest {
     @Test
     public void should_save_task() {
         when(taskMapper.toEntity(requestDto)).thenReturn(task);
+        when(categoryRepository.findById(1L)).thenReturn(Optional.of(category));
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user1));
+        when(userRepository.findById(2L)).thenReturn(Optional.of(user2));
 
         taskService.save(requestDto);
 
-        verify(taskRepository).save(task);
+        assertEquals(category, task.getCategory());
+        assertEquals(user1, task.getOwnerUser());
+        assertEquals(user2, task.getAssignedUser());
+
         verify(taskMapper).toEntity(requestDto);
+        verify(categoryRepository).findById(1L);
+        verify(userRepository).findById(1L);
+        verify(userRepository).findById(2L);
+        verify(taskRepository).save(task);
     }
 
     @Test
@@ -110,14 +124,24 @@ public class TaskServiceTest {
     @Test
     public void should_update_task() {
         Task newTask = new Task(1L, "math homework", "page 256",
-                LocalDate.of(2026, 4, 11), HIGH, TODO, category, user);
+                LocalDate.of(2026, 4, 11), HIGH, TODO, category, user1);
+        newTask.setAssignedUser(user2);
+
         when(taskRepository.findById(1L)).thenReturn(Optional.of(newTask));
+        when(categoryRepository.findById(1L)).thenReturn(Optional.of(category));
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user1));
+        when(userRepository.findById(2L)).thenReturn(Optional.of(user2));
 
         taskService.update(1L, requestDto);
 
         assertEquals(newTask.getTitle(), requestDto.title());
+        assertEquals(user1, newTask.getOwnerUser());
+        assertEquals(user2, newTask.getAssignedUser());
 
         verify(taskRepository).save(newTask);
+        verify(categoryRepository).findById(1L);
+        verify(userRepository).findById(1L);
+        verify(userRepository).findById(2L);
     }
 
     @Test
@@ -136,8 +160,8 @@ public class TaskServiceTest {
 
     @Test
     void should_applyFilter() {
-        Task task2 = new Task(1L, "clean car", "inside & outside",
-                LocalDate.of(2026, 4, 11), HIGH, TODO, category, user);
+        Task task2 = new Task(2L, "clean car", "inside & outside",
+                LocalDate.of(2026, 4, 11), HIGH, TODO, category, user1);
 
         when(taskRepository.findAll()).thenReturn(List.of(task, task2));
         when(taskMapper.toDto(task2)).thenReturn(responseDto);
@@ -155,5 +179,5 @@ public class TaskServiceTest {
         verify(strategy).getKey();
         verify(strategy).filter(anyList(), eq("title 1"));
         verify(taskMapper).toDto(task2);
-    }*/
+    }
 }
