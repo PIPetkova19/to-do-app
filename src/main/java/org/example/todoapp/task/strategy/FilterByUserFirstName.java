@@ -18,7 +18,7 @@ public class FilterByUserFirstName implements TaskFilterStrategy{
     {
         return tasks
                 .stream()
-                .filter(task -> task.getUser().getFirstName().equals(value))
+                .filter(task -> task.getOwnerUser().getFirstName().equals(value))
                 .toList();
     }
 }

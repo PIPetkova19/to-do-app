@@ -19,4 +19,5 @@ public record TaskRequestDto(
         @NotNull(message = "Category is required!")
         Long categoryId,
         @NotNull(message = "User is required!")
-        Long userId) { }
+        Long ownerUserId,
+        Long assignedUserId) { }

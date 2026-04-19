@@ -34,8 +34,14 @@ public class TaskService {
         Task task = taskMapper.toEntity(dto);
         task.setCategory(categoryRepository.findById(dto.categoryId())
                 .orElseThrow(()->new EntityNotFoundException("Category with id: " + dto.categoryId() + " not found")));
-        task.setUser(userRepository.findById(dto.userId())
-                .orElseThrow(()->new EntityNotFoundException("User with id: " + dto.userId() + " not found")));
+        task.setOwnerUser(userRepository.findById(dto.ownerUserId())
+                .orElseThrow(()->new EntityNotFoundException("User with id: " + dto.ownerUserId() + " not found")));
+        if (dto.assignedUserId() != null) {
+            task.setAssignedUser(userRepository.findById(dto.assignedUserId())
+                    .orElseThrow(() -> new EntityNotFoundException("User with id: " + dto.assignedUserId() + " not found")));
+        } else {
+            task.setAssignedUser(null);
+        }
         taskRepository.save(task);
         System.out.println("Saved task: " + task);
     }
@@ -72,8 +78,14 @@ public class TaskService {
         task.setStatus(dto.status());
         task.setCategory(categoryRepository.findById(dto.categoryId())
                 .orElseThrow(()->new EntityNotFoundException("Category with id: " + id + " not found")));
-        task.setUser(userRepository.findById(dto.userId())
-                .orElseThrow(()->new EntityNotFoundException("User with id: " + dto.userId() + " not found")));
+        task.setOwnerUser(userRepository.findById(dto.ownerUserId())
+                .orElseThrow(()->new EntityNotFoundException("User with id: " + dto.ownerUserId() + " not found")));
+        if (dto.assignedUserId() != null) {
+            task.setAssignedUser(userRepository.findById(dto.assignedUserId())
+                    .orElseThrow(() -> new EntityNotFoundException("User with id: " + dto.assignedUserId() + " not found")));
+        } else {
+            task.setAssignedUser(null);
+        }
         taskRepository.save(task);
         System.out.println("Updated task: " + task.getTitle());
     }

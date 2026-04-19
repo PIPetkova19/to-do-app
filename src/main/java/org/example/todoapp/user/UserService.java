@@ -1,6 +1,8 @@
 package org.example.todoapp.user;
 
 import org.example.todoapp.common.exception.EntityNotFoundException;
+import org.example.todoapp.task.Task;
+import org.example.todoapp.task.TaskRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,10 +12,13 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final TaskRepository taskRepository;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper) {
+    public UserService(UserRepository userRepository, UserMapper userMapper,
+                       TaskRepository taskRepository) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.taskRepository = taskRepository;
     }
 
     @Transactional
@@ -53,6 +58,12 @@ public class UserService {
 
     @Transactional
     public void delete(Long id) {
+        User user= userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User with id: " + id + " not found"));
+        List<Task> tasks = taskRepository.findByAssignedUser(user);
+        for (Task task : tasks) {
+            task.setAssignedUser(null);
+        }
         userRepository.deleteById(id);
         System.out.println("Deleted user");
     }

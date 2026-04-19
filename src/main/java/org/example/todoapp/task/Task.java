@@ -33,8 +33,12 @@ public class Task {
     private Category category;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "owner_user_id", nullable = false)
+    private User ownerUser;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "assigned_user_id")
+    private User assignedUser;
 
     public Task() {
     }
@@ -52,7 +56,7 @@ public class Task {
 
     //tests
     public Task(Long id, String title, String description, LocalDate dueDate,
-                Priority priority, Status status, Category category, User user) {
+                Priority priority, Status status, Category category, User ownerUser) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -60,7 +64,7 @@ public class Task {
         this.priority = priority;
         this.status = status;
         this.category = category;
-        this.user = user;
+        this.ownerUser = ownerUser;
     }
 
     public Long getId() {
@@ -115,18 +119,26 @@ public class Task {
         this.category = category;
     }
 
-    public User getUser() {
-        return user;
+    public User getOwnerUser() {
+        return ownerUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setOwnerUser(User user) {
+        this.ownerUser = user;
+    }
+
+    public User getAssignedUser() {
+        return assignedUser;
+    }
+
+    public void setAssignedUser(User assignedUser) {
+        this.assignedUser = assignedUser;
     }
 
     @Override
     public String toString() {
         return String.format("Task [id=%s, title=%s, description=%s, dueDate=%s, " +
                         "priority=%s, status=%s, category=%s, user=%s]",
-                id, title, description, dueDate, priority, status, category, user);
+                id, title, description, dueDate, priority, status, category, ownerUser);
     }
 }

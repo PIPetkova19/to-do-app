@@ -22,7 +22,7 @@ public class User {
     private String email;
 
     @OneToMany(
-            mappedBy = "user",
+            mappedBy = "ownerUser",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
@@ -82,12 +82,12 @@ public class User {
 
     public void addTask(Task task) {
         tasks.add(task);
-        task.setUser(this);
+        task.setOwnerUser(this);
     }
 
     public void removeTask(Task task) {
         tasks.remove(task);
-        task.setUser(null);
+        task.setOwnerUser(null);
     }
 
     @Override

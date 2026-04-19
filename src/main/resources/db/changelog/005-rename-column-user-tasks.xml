@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="0" author="admin">
+        <dropForeignKeyConstraint baseTableName="tasks"
+                                  constraintName="FK_TASK_ON_USER"/>
+    </changeSet>
+    <changeSet id="1" author="admin">
+        <dropColumn tableName="tasks" columnName="user_id"/>
+    </changeSet>
+    <changeSet id="2" author="admin">
+        <addColumn tableName="tasks">
+            <column name="owner_user_id" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
