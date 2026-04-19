@@ -4,16 +4,16 @@ import org.example.todoapp.category.Category;
 import org.example.todoapp.category.Priority;
 import org.example.todoapp.category.Status;
 import org.example.todoapp.task.Task;
-import org.example.todoapp.task.strategy.FilterByCategory;
+import org.example.todoapp.task.strategy.FilterByCategoryTitle;
 import org.junit.jupiter.api.Test;
-import user.User;
+import org.example.todoapp.user.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FilterByCategoryTest {
+public class FilterByCategoryTitleTest {
     @Test
     public void should_filter_byCategory(){
         User user=new User(1L,"petya","petkova","p@gmail.com");
@@ -25,7 +25,7 @@ public class FilterByCategoryTest {
                 LocalDate.parse("2020-01-01"), Priority.HIGH, Status.TODO,category2,user);
         List<Task> tasks = List.of(task1, task2);
         List<Task> filteredTasks= List.of(task1);
-        FilterByCategory filter=new FilterByCategory();
+        FilterByCategoryTitle filter=new FilterByCategoryTitle();
 
         List<Task> result=filter.filter(tasks,"work");
 

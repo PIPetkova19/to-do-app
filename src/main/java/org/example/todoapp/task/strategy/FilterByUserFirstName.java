@@ -6,18 +6,19 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class FilterByCategory implements TaskFilterStrategy {
+public class FilterByUserFirstName implements TaskFilterStrategy{
 
     @Override
     public String getKey() {
-        return "category";
+        return "user";
     }
 
-    public List<Task> filter(List<Task> tasks, String value)
+    @Override
+    public List<Task> filter(List<Task> tasks,String value)
     {
         return tasks
                 .stream()
-                .filter(task->task.getCategory().getTitle().equals(value))
+                .filter(task -> task.getUser().getFirstName().equals(value))
                 .toList();
     }
 }

@@ -78,7 +78,7 @@ public class TaskService {
         System.out.println("Updated task: " + task.getTitle());
     }
 
-    //status(type)->done(value)
+    //title(type)->math hw(value)
     public List<TaskResponseDto> applyFilter(Map<String, String> filters) {
 
         List<Task> tasks = taskRepository.findAll();

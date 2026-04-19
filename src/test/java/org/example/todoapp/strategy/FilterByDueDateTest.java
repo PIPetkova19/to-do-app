@@ -6,7 +6,7 @@ import org.example.todoapp.category.Status;
 import org.example.todoapp.task.Task;
 import org.example.todoapp.task.strategy.FilterByDueDate;
 import org.junit.jupiter.api.Test;
-import user.User;
+import org.example.todoapp.user.*;
 
 import java.time.LocalDate;
 import java.util.List;

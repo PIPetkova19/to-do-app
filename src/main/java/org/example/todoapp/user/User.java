@@ -1,6 +1,5 @@
 package org.example.todoapp.user;
 
-
 import jakarta.persistence.*;
 import org.example.todoapp.task.Task;
 
