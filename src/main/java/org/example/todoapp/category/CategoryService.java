@@ -26,11 +26,8 @@ public class CategoryService {
 
     @Transactional(readOnly = true)
     public List<CategoryResponseDto> getAll() {
-        return categoryRepository
-                .findAll()
-                .stream()
-                .map(categoryMapper::toDto)
-                .toList();
+        List<Category> categories = categoryRepository.findAll();
+        return categoryMapper.toDtoList(categories);
     }
 
     @Transactional(readOnly = true)

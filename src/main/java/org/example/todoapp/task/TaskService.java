@@ -54,11 +54,8 @@ public class TaskService {
 
     @Transactional(readOnly = true)
     public List<TaskResponseDto> getAll() {
-        return taskRepository
-                .findAll()
-                .stream()
-                .map(taskMapper::toDto)
-                .toList();
+        List<Task> tasks= taskRepository.findAll();
+        return taskMapper.toDtoList(tasks);
     }
 
     @Transactional

@@ -38,11 +38,8 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<UserResponseDto> getAll() {
-       return userRepository
-               .findAll()
-               .stream()
-               .map(userMapper::toDto)
-               .toList();
+       List<User> users= userRepository.findAll();
+       return userMapper.toDtoList(users);
     }
 
     @Transactional
