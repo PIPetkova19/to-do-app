@@ -1,8 +1,8 @@
 package org.example.todoapp.strategy;
 
 import org.example.todoapp.category.Category;
-import org.example.todoapp.category.Priority;
-import org.example.todoapp.category.Status;
+import org.example.todoapp.task.Priority;
+import org.example.todoapp.task.Status;
 import org.example.todoapp.task.Task;
 import org.example.todoapp.task.strategy.FilterByPriority;
 import org.junit.jupiter.api.Test;

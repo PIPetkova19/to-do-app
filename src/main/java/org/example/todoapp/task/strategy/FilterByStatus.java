@@ -1,6 +1,6 @@
 package org.example.todoapp.task.strategy;
 
-import org.example.todoapp.category.Status;
+import org.example.todoapp.task.Status;
 import org.example.todoapp.task.Task;
 import org.springframework.stereotype.Component;
 import java.util.List;

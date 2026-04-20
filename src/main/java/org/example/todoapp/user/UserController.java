@@ -24,13 +24,13 @@ public class UserController {
             return userService.getAll();
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "No tasks found.", e);
+                    HttpStatus.NOT_FOUND, "No users found.", e);
         }
     }
 
     @GetMapping("/{id}")
     public UserResponseDto getUser(@PathVariable Long id) {
-        try {
+       try {
             return userService.getById(id);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(

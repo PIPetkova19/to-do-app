@@ -1,4 +1,4 @@
-package org.example.todoapp.category;
+package org.example.todoapp.task;
 
 public enum Status {
     TODO, IN_PROGRESS, DONE

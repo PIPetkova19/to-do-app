@@ -2,8 +2,6 @@ package org.example.todoapp.task;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import org.example.todoapp.category.Priority;
-import org.example.todoapp.category.Status;
 
 import java.time.LocalDate;
 

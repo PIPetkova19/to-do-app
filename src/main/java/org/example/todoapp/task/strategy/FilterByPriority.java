@@ -1,6 +1,6 @@
 package org.example.todoapp.task.strategy;
 
-import org.example.todoapp.category.Priority;
+import org.example.todoapp.task.Priority;
 import org.example.todoapp.task.Task;
 import org.springframework.stereotype.Component;
 

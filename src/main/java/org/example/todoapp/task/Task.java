@@ -2,8 +2,6 @@ package org.example.todoapp.task;
 
 import jakarta.persistence.*;
 import org.example.todoapp.category.Category;
-import org.example.todoapp.category.Priority;
-import org.example.todoapp.category.Status;
 import org.example.todoapp.user.*;
 
 import java.time.LocalDate;

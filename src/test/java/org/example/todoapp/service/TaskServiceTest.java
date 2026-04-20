@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.example.todoapp.category.Priority.HIGH;
-import static org.example.todoapp.category.Status.TODO;
+import static org.example.todoapp.task.Priority.HIGH;
+import static org.example.todoapp.task.Status.TODO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.eq;
