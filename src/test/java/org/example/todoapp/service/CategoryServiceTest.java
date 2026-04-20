@@ -82,7 +82,7 @@ public class CategoryServiceTest {
     @Test
     void should_getAll_categories() {
         when(categoryRepository.findAll()).thenReturn(List.of(category));
-        when(categoryMapper.toDto(category)).thenReturn(responseDto);
+        when(categoryMapper.toDtoList(List.of(category))).thenReturn(List.of(responseDto));
 
         List<CategoryResponseDto> result = categoryService.getAll();
 
@@ -90,6 +90,8 @@ public class CategoryServiceTest {
         assertEquals(responseDto, result.getFirst());
 
         verify(categoryRepository).findAll();
-        verify(categoryMapper).toDto(category);
+        verify(categoryMapper).toDtoList(List.of(category));
     }
+
+
 }

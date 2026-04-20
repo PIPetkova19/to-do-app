@@ -83,7 +83,7 @@ public class UserServiceTest {
     @Test
     void should_getAll_users() {
         when(userRepository.findAll()).thenReturn(List.of(user));
-        when(userMapper.toDto(user)).thenReturn(userResponseDto);
+        when(userMapper.toDtoList(List.of(user))).thenReturn(List.of(userResponseDto));
 
         List<UserResponseDto> result = userService.getAll();
 
@@ -91,7 +91,7 @@ public class UserServiceTest {
         assertEquals(userResponseDto, result.getFirst());
 
         verify(userRepository).findAll();
-        verify(userMapper).toDto(user);
+        verify(userMapper).toDtoList(List.of(user));
     }
 
     @Test

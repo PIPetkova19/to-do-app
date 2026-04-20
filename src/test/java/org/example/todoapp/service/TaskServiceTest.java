@@ -147,7 +147,7 @@ public class TaskServiceTest {
     @Test
     public void should_getAll_tasks() {
         when(taskRepository.findAll()).thenReturn(List.of(task));
-        when(taskMapper.toDto(task)).thenReturn(responseDto);
+        when(taskMapper.toDtoList(List.of(task))).thenReturn(List.of(responseDto));
 
         List<TaskResponseDto> result = taskService.getAll();
 
@@ -155,7 +155,7 @@ public class TaskServiceTest {
         assertEquals(responseDto, result.getFirst());
 
         verify(taskRepository).findAll();
-        verify(taskMapper).toDto(task);
+        verify(taskMapper).toDtoList(List.of(task));
     }
 
     @Test
