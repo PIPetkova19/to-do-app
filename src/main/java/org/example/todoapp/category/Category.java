@@ -12,7 +12,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name="title", nullable = false)
     private String title;
 
     @OneToMany(
@@ -25,13 +25,13 @@ public class Category {
     public Category() {}
 
     //tests
-    public Category(Long id, String title) {
+     Category(Long id, String title) {
         this.id = id;
         this.title = title;
     }
 
     public Category(String title) {
-        this.title = title;
+        this(null,title);
     }
 
     public Long getId() {

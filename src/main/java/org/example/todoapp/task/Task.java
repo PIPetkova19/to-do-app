@@ -13,24 +13,28 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name="title", nullable = false)
     private String title;
+
+    @Column(name="description")
     private String description;
+
+    @Column(name="due_date")
     private LocalDate dueDate;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name="priority", nullable = false)
     private Priority priority;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name="status", nullable = false)
     private Status status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "owner_user_id", nullable = false)
     private User ownerUser;
 
@@ -44,16 +48,11 @@ public class Task {
     public Task(String title, String description,
                 LocalDate dueDate, Priority priority,
                 Status status, Category category) {
-        this.title = title;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.priority = priority;
-        this.status = status;
-        this.category = category;
+      this(null,title,description,dueDate,priority,status,category,null);
     }
 
     //tests
-    public Task(Long id, String title, String description, LocalDate dueDate,
+     Task(Long id, String title, String description, LocalDate dueDate,
                 Priority priority, Status status, Category category, User ownerUser) {
         this.id = id;
         this.title = title;

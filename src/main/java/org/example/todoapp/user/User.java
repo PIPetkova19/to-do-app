@@ -26,17 +26,15 @@ public class User {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    List<Task> tasks;
+    private List<Task> tasks;
 
     public User() {}
 
     public User(String firstName, String lastName, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
+        this(null, firstName, lastName, email);
     }
 
-    //tests
+    //tests;access mod
     public User(Long id,String firstName, String lastName, String email) {
         this.id = id;
         this.firstName = firstName;
