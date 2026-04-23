@@ -5,6 +5,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
+import java.util.Objects;
+
 @MappedSuperclass
 public class BaseEntity {
     @Id
@@ -18,5 +20,17 @@ public class BaseEntity {
 
     public Long getId() {
         return id;
+    }
+ 
+    @Override
+    public boolean equals(Object o) {
+       if(this==o) return true;
+       if(!(o instanceof BaseEntity)) return false;
+       return id!=null && id.equals(((BaseEntity)o).id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }
