@@ -2,17 +2,14 @@ package org.example.todoapp.task;
 
 import jakarta.persistence.*;
 import org.example.todoapp.category.Category;
+import org.example.todoapp.common.entity.BaseEntity;
 import org.example.todoapp.user.*;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name="tasks")
-public class Task {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Task extends BaseEntity {
     @Column(name="title", nullable = false)
     private String title;
 
@@ -52,9 +49,9 @@ public class Task {
     }
 
     //tests
-     Task(Long id, String title, String description, LocalDate dueDate,
+     public Task(Long id, String title, String description, LocalDate dueDate,
                 Priority priority, Status status, Category category, User ownerUser) {
-        this.id = id;
+        this.setId(id);
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
@@ -62,10 +59,6 @@ public class Task {
         this.status = status;
         this.category = category;
         this.ownerUser = ownerUser;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getTitle() {
@@ -136,6 +129,6 @@ public class Task {
     public String toString() {
         return String.format("Task [id=%s, title=%s, description=%s, dueDate=%s, " +
                         "priority=%s, status=%s, category=%s, user=%s]",
-                id, title, description, dueDate, priority, status, category, ownerUser);
+                this.getId(), title, description, dueDate, priority, status, category, ownerUser);
     }
 }

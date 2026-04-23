@@ -1,16 +1,15 @@
 package org.example.todoapp.user;
 
 import jakarta.persistence.*;
+import org.example.todoapp.common.entity.BaseEntity;
 import org.example.todoapp.task.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long id;
+public class User extends BaseEntity {
 
     @Column(nullable = false)
     private String firstName;
@@ -26,7 +25,7 @@ public class User {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Task> tasks;
+    private List<Task> tasks=new ArrayList<>();
 
     public User() {}
 
@@ -36,14 +35,10 @@ public class User {
 
     //tests;access mod
     public User(Long id,String firstName, String lastName, String email) {
-        this.id = id;
+        this.setId(id);
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getFirstName() {
@@ -90,6 +85,6 @@ public class User {
 
     @Override
     public String toString() {
-        return String.format("User [id=%s, fullName=%s %s, email=%s]", id, firstName, lastName, email);
+        return String.format("User [id=%s, fullName=%s %s, email=%s]", this.getId(), firstName, lastName, email);
     }
 }

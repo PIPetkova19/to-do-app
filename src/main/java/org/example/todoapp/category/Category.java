@@ -1,17 +1,15 @@
 package org.example.todoapp.category;
 
 import jakarta.persistence.*;
+import org.example.todoapp.common.entity.BaseEntity;
 import org.example.todoapp.task.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name="categories")
-public class Category {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Category extends BaseEntity {
     @Column(name="title", nullable = false)
     private String title;
 
@@ -20,22 +18,18 @@ public class Category {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Task> tasks;
+    private List<Task> tasks=new ArrayList<>(); //!
 
     public Category() {}
 
     //tests
-     Category(Long id, String title) {
-        this.id = id;
+     public Category(Long id, String title) {
+        this.setId(id);
         this.title = title;
     }
 
     public Category(String title) {
         this(null,title);
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getTitle() {
@@ -66,6 +60,6 @@ public class Category {
 
     @Override
     public String toString() {
-        return String.format("Category [id=%s, title=%s]", id, title);
+        return String.format("Category [id=%s, title=%s]", this.getId(), title);
     }
 }
