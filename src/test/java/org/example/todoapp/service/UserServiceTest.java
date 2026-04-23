@@ -14,7 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.example.todoapp.user.UserService;
+import org.example.todoapp.user.UserServiceImpl;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -32,7 +32,7 @@ public class UserServiceTest {
     private UserRepository userRepository;
 
     @InjectMocks
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Mock
     UserMapper userMapper;
