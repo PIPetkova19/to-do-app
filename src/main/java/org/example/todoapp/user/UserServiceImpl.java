@@ -3,6 +3,8 @@ package org.example.todoapp.user;
 import org.example.todoapp.common.exception.EntityNotFoundException;
 import org.example.todoapp.task.Task;
 import org.example.todoapp.task.TaskRepository;
+import org.example.todoapp.user.event.UserRegistrationEvent;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,18 +17,27 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final TaskRepository taskRepository;
+    private final ApplicationEventPublisher publisher;
+
 
     public UserServiceImpl(UserRepository userRepository, UserMapper userMapper,
-                           TaskRepository taskRepository) {
+                           TaskRepository taskRepository,
+                           ApplicationEventPublisher publisher) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.taskRepository = taskRepository;
+        this.publisher=publisher;
     }
 
     @Transactional
     public void save(UserRequestDto dto) {
         User user = userMapper.toEntity(dto);
         userRepository.save(user);
+
+        //prashta imeil pri zapisvane na user v db
+        //bez event mailService.sendEmail(...);
+        publisher.publishEvent(new UserRegistrationEvent(user.getEmail()));
+
         System.out.println("Saved user: " + user);
     }
 
