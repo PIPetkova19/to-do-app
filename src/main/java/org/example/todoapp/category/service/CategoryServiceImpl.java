@@ -7,6 +7,8 @@ import org.example.todoapp.category.model.Category;
 import org.example.todoapp.category.repository.CategoryRepository;
 import org.example.todoapp.common.exception.EntityNotFoundException;
 import org.example.todoapp.common.exception.EntityAlreadyExistsException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -16,9 +18,11 @@ import java.util.Optional;
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
+    private static final Logger logger =
+            LoggerFactory.getLogger(CategoryServiceImpl.class);
 
     public CategoryServiceImpl(CategoryRepository categoryRepository,
-                           CategoryMapper categoryMapper) {
+                               CategoryMapper categoryMapper) {
         this.categoryRepository = categoryRepository;
         this.categoryMapper = categoryMapper;
     }
@@ -26,12 +30,12 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public void save(CategoryRequestDto dto) {
         Category category = categoryMapper.toEntity(dto);
-        Optional<Category> alreadyExists=categoryRepository.findByTitle(category.getTitle());
-        if(alreadyExists.isPresent()) {
-            throw new EntityAlreadyExistsException("category with title "+category.getTitle()+" already exists.");
+        Optional<Category> alreadyExists = categoryRepository.findByTitle(category.getTitle());
+        if (alreadyExists.isPresent()) {
+            throw new EntityAlreadyExistsException("category with title " + category.getTitle() + " already exists.");
         }
         categoryRepository.save(category);
-        System.out.println("Saved Category: " + category.getTitle());
+        logger.info("Saved Category with title {}",category.getTitle());
     }
 
     @Transactional(readOnly = true)
@@ -43,21 +47,25 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional(readOnly = true)
     public CategoryResponseDto getById(Long id) {
         return categoryMapper.toDto(categoryRepository.findById(id)
-                .orElseThrow(()->new EntityNotFoundException("Category with id: "+id+" not found")));
+                .orElseThrow(() -> new EntityNotFoundException("Category with id: " + id + " not found")));
     }
 
     @Transactional
     public void delete(Long id) {
+        if (!categoryRepository.existsById(id)) {
+            throw new EntityNotFoundException("Category with id: " + id + " not found");
+        }
+
         categoryRepository.deleteById(id);
-        System.out.println("Deleted category");
+        logger.info("Deleted Category with id: {}",id);
     }
 
     @Transactional
     public void update(Long id, CategoryRequestDto dto) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(()->new EntityNotFoundException("Category with id: "+id+" not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Category with id: " + id + " not found"));
         category.setTitle(dto.title());
         categoryRepository.save(category);
-        System.out.println("Updated Category: " + category.getTitle());
+        logger.info("Updated Category with id: {}", id);
     }
 }
