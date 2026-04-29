@@ -22,22 +22,13 @@ public class CategoryController {
 
     @GetMapping
     public List<CategoryResponseDto> getCategories() {
-        try {
             return categoryService.getAll();
-        } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "No categories found.", e);
-        }
     }
 
     @GetMapping("/{id}")
     public CategoryResponseDto getCategory(@PathVariable Long id) {
-        try {
             return categoryService.getById(id);
-        } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Category with id " + id + " not found.", e);
-        }    }
+         }
 
     @PostMapping
     public void createCategory(@Valid @RequestBody CategoryRequestDto dto) {

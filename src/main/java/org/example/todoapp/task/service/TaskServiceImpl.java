@@ -1,6 +1,7 @@
 package org.example.todoapp.task.service;
 
 import org.example.todoapp.category.repository.CategoryRepository;
+import org.example.todoapp.common.exception.EntityAlreadyExistsException;
 import org.example.todoapp.common.exception.EntityNotFoundException;
 import org.example.todoapp.task.mapper.TaskMapper;
 import org.example.todoapp.task.dto.TaskRequestDto;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -36,6 +38,10 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     public void save(TaskRequestDto dto) {
         Task task = taskMapper.toEntity(dto);
+        Optional<Task> alreadyExists = taskRepository.findByTitle(task.getTitle());
+        if (alreadyExists.isPresent()) {
+            throw new EntityAlreadyExistsException("task with title " + task.getTitle() + " already exists");
+        }
         task.setCategory(categoryRepository.findById(dto.categoryId())
                 .orElseThrow(()->new EntityNotFoundException("Category with id: " + dto.categoryId() + " not found")));
         task.setOwnerUser(userRepository.findById(dto.ownerUserId())
@@ -64,6 +70,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Transactional
     public void delete(Long id) {
+        if(!taskRepository.existsById(id)) {
+            throw new EntityNotFoundException("Task with id: " + id + " not found");
+        }
         taskRepository.deleteById(id);
         System.out.println("Deleted task");
     }
@@ -78,7 +87,7 @@ public class TaskServiceImpl implements TaskService {
         task.setPriority(dto.priority());
         task.setStatus(dto.status());
         task.setCategory(categoryRepository.findById(dto.categoryId())
-                .orElseThrow(()->new EntityNotFoundException("Category with id: " + id + " not found")));
+                .orElseThrow(()->new EntityNotFoundException("Category with id: " + dto.categoryId() + " not found")));
         task.setOwnerUser(userRepository.findById(dto.ownerUserId())
                 .orElseThrow(()->new EntityNotFoundException("User with id: " + dto.ownerUserId() + " not found")));
         if (dto.assignedUserId() != null) {

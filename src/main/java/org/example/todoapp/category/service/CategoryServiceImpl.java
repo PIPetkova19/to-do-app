@@ -6,10 +6,11 @@ import org.example.todoapp.category.mapper.CategoryMapper;
 import org.example.todoapp.category.model.Category;
 import org.example.todoapp.category.repository.CategoryRepository;
 import org.example.todoapp.common.exception.EntityNotFoundException;
+import org.example.todoapp.common.exception.EntityAlreadyExistsException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -25,6 +26,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public void save(CategoryRequestDto dto) {
         Category category = categoryMapper.toEntity(dto);
+        Optional<Category> alreadyExists=categoryRepository.findByTitle(category.getTitle());
+        if(alreadyExists.isPresent()) {
+            throw new EntityAlreadyExistsException("category with title "+category.getTitle()+" already exists.");
+        }
         categoryRepository.save(category);
         System.out.println("Saved Category: " + category.getTitle());
     }

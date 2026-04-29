@@ -1,5 +1,6 @@
 package org.example.todoapp.user.service;
 
+import org.example.todoapp.common.exception.EntityAlreadyExistsException;
 import org.example.todoapp.common.exception.EntityNotFoundException;
 import org.example.todoapp.task.model.Task;
 import org.example.todoapp.task.repository.TaskRepository;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Primary
@@ -37,8 +39,11 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void save(UserRequestDto dto) {
         User user = userMapper.toEntity(dto);
+        Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
+        if (existingUser.isPresent()) {
+            throw new EntityAlreadyExistsException("User with email " + user.getEmail() + " already exists");
+        }
         userRepository.save(user);
-
         publisher.publishEvent(new UserRegistrationEvent(user.getEmail()));
 
         System.out.println("Saved user: " + user);

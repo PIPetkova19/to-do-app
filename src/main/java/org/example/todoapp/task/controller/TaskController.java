@@ -23,22 +23,12 @@ public class TaskController {
 
     @GetMapping
     public List<TaskResponseDto> getTasks() {
-        try {
             return taskService.getAll();
-        } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "No tasks found.", e);
-        }
     }
 
     @GetMapping("/{id}")
     public TaskResponseDto getTask(@PathVariable Long id) {
-        try {
             return taskService.getById(id);
-        } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Task with id "+id+" not found.", e);
-        }
     }
 
     @PostMapping
