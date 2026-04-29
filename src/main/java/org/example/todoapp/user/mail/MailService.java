@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class MailService {
 
-    //основният клас на Spring за имейли
     private final JavaMailSender mailSender;
 
     public MailService(JavaMailSender mailSender) {

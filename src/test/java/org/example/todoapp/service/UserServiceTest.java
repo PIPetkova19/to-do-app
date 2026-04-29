@@ -1,27 +1,27 @@
 package org.example.todoapp.service;
 
-import org.example.todoapp.category.Category;
-import org.example.todoapp.task.Task;
-import org.example.todoapp.task.TaskRepository;
-import org.example.todoapp.user.UserRequestDto;
-import org.example.todoapp.user.UserResponseDto;
-import org.example.todoapp.user.UserMapper;
-import org.example.todoapp.user.*;
-import org.example.todoapp.user.UserRepository;
+import org.example.todoapp.category.model.Category;
+import org.example.todoapp.task.model.Task;
+import org.example.todoapp.task.repository.TaskRepository;
+import org.example.todoapp.user.dto.UserRequestDto;
+import org.example.todoapp.user.dto.UserResponseDto;
+import org.example.todoapp.user.mapper.UserMapper;
+import org.example.todoapp.user.repository.UserRepository;
+import org.example.todoapp.user.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.example.todoapp.user.UserServiceImpl;
+import org.example.todoapp.user.service.UserServiceImpl;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import static org.example.todoapp.task.Priority.HIGH;
-import static org.example.todoapp.task.Status.TODO;
+import static org.example.todoapp.task.model.Priority.HIGH;
+import static org.example.todoapp.task.model.Status.TODO;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

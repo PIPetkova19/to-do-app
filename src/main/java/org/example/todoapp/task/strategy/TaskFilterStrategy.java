@@ -1,6 +1,6 @@
 package org.example.todoapp.task.strategy;
 
-import org.example.todoapp.task.Task;
+import org.example.todoapp.task.model.Task;
 
 import java.util.List;
 

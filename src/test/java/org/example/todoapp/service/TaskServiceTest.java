@@ -1,13 +1,18 @@
 package org.example.todoapp.service;
 
-import org.example.todoapp.category.Category;
-import org.example.todoapp.category.CategoryRepository;
-import org.example.todoapp.category.CategoryResponseDto;
-import org.example.todoapp.task.*;
+import org.example.todoapp.category.model.Category;
+import org.example.todoapp.category.repository.CategoryRepository;
+import org.example.todoapp.category.dto.CategoryResponseDto;
+import org.example.todoapp.task.dto.TaskRequestDto;
+import org.example.todoapp.task.dto.TaskResponseDto;
+import org.example.todoapp.task.mapper.TaskMapper;
+import org.example.todoapp.task.model.Task;
+import org.example.todoapp.task.repository.TaskRepository;
+import org.example.todoapp.task.service.TaskServiceImpl;
 import org.example.todoapp.task.strategy.TaskFilterStrategy;
-import org.example.todoapp.user.User;
-import org.example.todoapp.user.UserRepository;
-import org.example.todoapp.user.UserResponseDto;
+import org.example.todoapp.user.model.User;
+import org.example.todoapp.user.repository.UserRepository;
+import org.example.todoapp.user.dto.UserResponseDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,8 +24,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.example.todoapp.task.Priority.HIGH;
-import static org.example.todoapp.task.Status.TODO;
+import static org.example.todoapp.task.model.Priority.HIGH;
+import static org.example.todoapp.task.model.Status.TODO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.eq;

@@ -15,8 +15,7 @@ public class UserRegistrationListener {
     }
 
     @EventListener
-    //Когато някой публикува UserRegistrationEvent → извикай този метод
-    public void handleUserRegistered(UserRegistrationEvent event) {
+    public void handleUserRegistration(UserRegistrationEvent event) {
         String html = "<h1>Welcome to To-Do-App!</h1><p>Keep track of your day using our app :)</p>";
         try {
             mailService.sendHtml(event.email(), "To-Do-App", html);
