@@ -1,7 +1,6 @@
 package org.example.todoapp.task.service;
 
 import org.example.todoapp.category.repository.CategoryRepository;
-import org.example.todoapp.category.service.CategoryServiceImpl;
 import org.example.todoapp.common.exception.EntityAlreadyExistsException;
 import org.example.todoapp.common.exception.EntityNotFoundException;
 import org.example.todoapp.task.mapper.TaskMapper;
@@ -47,6 +46,11 @@ public class TaskServiceImpl implements TaskService {
         if (alreadyExists.isPresent()) {
             throw new EntityAlreadyExistsException("task with title " + task.getTitle() + " already exists");
         }
+        setCategoryAndUsers(dto, task);
+        logger.info("Saved task with title {}",task.getTitle());
+    }
+
+    private void setCategoryAndUsers(TaskRequestDto dto, Task task) {
         task.setCategory(categoryRepository.findById(dto.categoryId())
                 .orElseThrow(() -> new EntityNotFoundException("Category with id: " + dto.categoryId() + " not found")));
         task.setOwnerUser(userRepository.findById(dto.ownerUserId())
@@ -58,7 +62,6 @@ public class TaskServiceImpl implements TaskService {
             task.setAssignedUser(null);
         }
         taskRepository.save(task);
-        logger.info("Saved task with title {}",task.getTitle());
     }
 
     @Transactional(readOnly = true)
@@ -86,22 +89,7 @@ public class TaskServiceImpl implements TaskService {
     public void update(Long id, TaskRequestDto dto) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Task with id: " + id + " not found"));
-        task.setTitle(dto.title());
-        task.setDescription(dto.description());
-        task.setDueDate(dto.dueDate());
-        task.setPriority(dto.priority());
-        task.setStatus(dto.status());
-        task.setCategory(categoryRepository.findById(dto.categoryId())
-                .orElseThrow(() -> new EntityNotFoundException("Category with id: " + dto.categoryId() + " not found")));
-        task.setOwnerUser(userRepository.findById(dto.ownerUserId())
-                .orElseThrow(() -> new EntityNotFoundException("User with id: " + dto.ownerUserId() + " not found")));
-        if (dto.assignedUserId() != null) {
-            task.setAssignedUser(userRepository.findById(dto.assignedUserId())
-                    .orElseThrow(() -> new EntityNotFoundException("User with id: " + dto.assignedUserId() + " not found")));
-        } else {
-            task.setAssignedUser(null);
-        }
-        taskRepository.save(task);
+        taskMapper.updateTaskFromDto(dto, task);
         logger.info("Updated task with id{}", id);
     }
 

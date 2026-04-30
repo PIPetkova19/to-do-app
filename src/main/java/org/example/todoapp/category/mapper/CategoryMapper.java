@@ -4,6 +4,7 @@ import org.example.todoapp.category.dto.CategoryRequestDto;
 import org.example.todoapp.category.dto.CategoryResponseDto;
 import org.example.todoapp.category.model.Category;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface CategoryMapper {
     Category toEntity(CategoryRequestDto dto);
 
     List<CategoryResponseDto> toDtoList(List<Category> categories);
+
+    void updateCategoryFromDto(CategoryRequestDto dto, @MappingTarget Category category);
 }

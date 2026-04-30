@@ -4,6 +4,7 @@ import org.example.todoapp.user.dto.UserResponseDto;
 import org.example.todoapp.user.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -18,4 +19,7 @@ public interface UserMapper {
     User toEntity(UserRequestDto dto);
 
     List<UserResponseDto> toDtoList(List<User> users);
+
+    //    @Mapping(target = "firstName", ignore = true)
+    void updateUserFromDto(UserRequestDto dto, @MappingTarget User user);
 }

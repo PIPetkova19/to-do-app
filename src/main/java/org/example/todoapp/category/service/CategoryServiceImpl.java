@@ -35,7 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
             throw new EntityAlreadyExistsException("category with title " + category.getTitle() + " already exists.");
         }
         categoryRepository.save(category);
-        logger.info("Saved Category with title {}",category.getTitle());
+        logger.info("Saved Category with title {}", category.getTitle());
     }
 
     @Transactional(readOnly = true)
@@ -57,14 +57,14 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
         categoryRepository.deleteById(id);
-        logger.info("Deleted Category with id: {}",id);
+        logger.info("Deleted Category with id: {}", id);
     }
 
     @Transactional
     public void update(Long id, CategoryRequestDto dto) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Category with id: " + id + " not found"));
-        category.setTitle(dto.title());
+        categoryMapper.updateCategoryFromDto(dto, category);
         categoryRepository.save(category);
         logger.info("Updated Category with id: {}", id);
     }

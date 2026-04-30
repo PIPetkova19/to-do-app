@@ -5,6 +5,7 @@ import org.example.todoapp.task.dto.TaskResponseDto;
 import org.example.todoapp.task.model.Task;
 import org.example.todoapp.user.mapper.UserMapper;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface TaskMapper {
     Task toEntity(TaskRequestDto dto);
 
     List<TaskResponseDto> toDtoList(List<Task> tasks);
+
+    void updateTaskFromDto(TaskRequestDto dto, @MappingTarget Task task);
 }
