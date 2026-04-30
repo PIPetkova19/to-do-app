@@ -90,6 +90,7 @@ public class TaskServiceImpl implements TaskService {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Task with id: " + id + " not found"));
         taskMapper.updateTaskFromDto(dto, task);
+        taskRepository.save(task);
         logger.info("Updated task with id{}", id);
     }
 

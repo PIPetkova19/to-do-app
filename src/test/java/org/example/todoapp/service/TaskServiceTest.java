@@ -149,6 +149,7 @@ class TaskServiceTest {
 
     @Test
     void should_delete_task() {
+        when(taskRepository.existsById(1L)).thenReturn(true);
         taskService.delete(1L);
 
         verify(taskRepository).deleteById(1L);
@@ -156,38 +157,13 @@ class TaskServiceTest {
 
     @Test
     void should_update_task() {
-        Task existingTask = new Task(
-                1L,
-                "old title",
-                "old desc",
-                LocalDate.of(2026, 4, 1),
-                HIGH,
-                TODO,
-                category,
-                user1
-        );
-
-        when(taskRepository.findById(1L)).thenReturn(Optional.of(existingTask));
-        when(categoryRepository.findById(1L)).thenReturn(Optional.of(category));
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user1));
-        when(userRepository.findById(2L)).thenReturn(Optional.of(user2));
+        when(taskRepository.findById(1L)).thenReturn(Optional.of(task));
 
         taskService.update(1L, requestDto);
 
-        assertEquals(requestDto.title(), existingTask.getTitle());
-        assertEquals(requestDto.description(), existingTask.getDescription());
-        assertEquals(requestDto.dueDate(), existingTask.getDueDate());
-        assertEquals(requestDto.priority(), existingTask.getPriority());
-        assertEquals(requestDto.status(), existingTask.getStatus());
-        assertEquals(category, existingTask.getCategory());
-        assertEquals(user1, existingTask.getOwnerUser());
-        assertEquals(user2, existingTask.getAssignedUser());
-
         verify(taskRepository).findById(1L);
-        verify(categoryRepository).findById(1L);
-        verify(userRepository).findById(1L);
-        verify(userRepository).findById(2L);
-        verify(taskRepository).save(existingTask);
+        verify(taskRepository).save(task);
+        verify(taskMapper).updateTaskFromDto(requestDto, task);
     }
 
     @Test
@@ -198,7 +174,7 @@ class TaskServiceTest {
         List<TaskResponseDto> result = taskService.getAll();
 
         assertEquals(1, result.size());
-        assertEquals(responseDto, result.get(0));
+        assertEquals(responseDto, result.getFirst());
 
         verify(taskRepository).findAll();
         verify(taskMapper).toDtoList(List.of(task));
@@ -225,7 +201,7 @@ class TaskServiceTest {
         List<TaskResponseDto> result = taskService.applyFilter(Map.of("title", "math"));
 
         assertEquals(1, result.size());
-        assertEquals(responseDto, result.get(0));
+        assertEquals(responseDto, result.getFirst());
 
         verify(taskRepository).findAll();
         verify(strategy).getKey();

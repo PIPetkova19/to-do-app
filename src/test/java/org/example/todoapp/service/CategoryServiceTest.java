@@ -5,7 +5,6 @@ import org.example.todoapp.category.dto.CategoryResponseDto;
 import org.example.todoapp.category.mapper.CategoryMapper;
 import org.example.todoapp.category.model.Category;
 import org.example.todoapp.category.repository.CategoryRepository;
-import org.example.todoapp.category.service.CategoryService;
 import org.example.todoapp.category.service.CategoryServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -58,9 +57,9 @@ public class CategoryServiceTest {
         when(categoryRepository.findById(1L)).thenReturn(Optional.ofNullable(category));
         when(categoryMapper.toDto(category)).thenReturn(responseDto);
 
-        CategoryResponseDto newCategory=categoryService.getById(1L);
+        CategoryResponseDto newCategory = categoryService.getById(1L);
 
-        assertEquals(newCategory,responseDto);
+        assertEquals(newCategory, responseDto);
 
         verify(categoryRepository).findById(1L);
         verify(categoryMapper).toDto(category);
@@ -76,7 +75,7 @@ public class CategoryServiceTest {
 
     @Test
     public void should_update_category() {
-        Category newCategory = new Category( 1L,"school");
+        Category newCategory = new Category(1L, "school");
         when(categoryRepository.findById(1L)).thenReturn(Optional.of(newCategory));
 
         categoryService.update(1L, requestDto);
@@ -98,6 +97,4 @@ public class CategoryServiceTest {
         verify(categoryRepository).findAll();
         verify(categoryMapper).toDtoList(List.of(category));
     }
-
-
 }

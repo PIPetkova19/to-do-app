@@ -46,18 +46,16 @@ public class UserServiceTest {
     @Mock
     ApplicationEventPublisher publisher;
 
-    private UserRequestDto userRequestDto;
-    private UserResponseDto userResponseDto;
+    private UserRequestDto requestDto;
+    private UserResponseDto responseDto;
     private User user;
-    private User newUser;
     private Task task;
 
     @BeforeEach
     public void setup() {
-        userResponseDto = new UserResponseDto(1L, "petya petkova", "p@gmail.com");
-        userRequestDto = new UserRequestDto("petya", "petkova", "p@gmail.com");
+        responseDto = new UserResponseDto(1L, "petya petkova", "p@gmail.com");
+        requestDto = new UserRequestDto("petya", "petkova", "p@gmail.com");
         user = new User(1L, "petya", "petkova", "p@gmail.com");
-        newUser = new User(1L, "rado", "ivanov", "r@gmail.com");
         Category category = new Category(1L, "school");
         task = new Task(1L, "math homework", "page 256",
                 LocalDate.of(2026, 4, 11), HIGH, TODO, category, user);
@@ -65,11 +63,11 @@ public class UserServiceTest {
 
     @Test
     void should_save_user() {
-        when(userMapper.toEntity(userRequestDto)).thenReturn(user);
+        when(userMapper.toEntity(requestDto)).thenReturn(user);
         when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.empty());
-        userService.save(userRequestDto);
+        userService.save(requestDto);
 
-        verify(userMapper).toEntity(userRequestDto);
+        verify(userMapper).toEntity(requestDto);
         verify(userRepository).findByEmail(user.getEmail());
         verify(userRepository).save(user);
         verify(publisher).publishEvent(any(UserRegistrationEvent.class));
@@ -78,11 +76,11 @@ public class UserServiceTest {
     @Test
     void should_getById_user() {
         when(userRepository.findById(user.getId())).thenReturn(Optional.ofNullable(user));
-        when(userMapper.toDto(user)).thenReturn(userResponseDto);
+        when(userMapper.toDto(user)).thenReturn(responseDto);
 
         UserResponseDto newUser = userService.getById(user.getId());
 
-        assertEquals(userResponseDto, newUser);
+        assertEquals(responseDto, newUser);
 
         verify(userMapper).toDto(user);
         verify(userRepository).findById(user.getId());
@@ -91,12 +89,12 @@ public class UserServiceTest {
     @Test
     void should_getAll_users() {
         when(userRepository.findAll()).thenReturn(List.of(user));
-        when(userMapper.toDtoList(List.of(user))).thenReturn(List.of(userResponseDto));
+        when(userMapper.toDtoList(List.of(user))).thenReturn(List.of(responseDto));
 
         List<UserResponseDto> result = userService.getAll();
 
         assertEquals(1, result.size());
-        assertEquals(userResponseDto, result.getFirst());
+        assertEquals(responseDto, result.getFirst());
 
         verify(userRepository).findAll();
         verify(userMapper).toDtoList(List.of(user));
@@ -104,12 +102,14 @@ public class UserServiceTest {
 
     @Test
     void should_update_user() {
+        User newUser = new User(1L, "rado", "ivanov", "r@gmail.com");
+
         when(userRepository.findById(1L)).thenReturn(Optional.of(newUser));
 
-        userService.update(1L, userRequestDto);
+        userService.update(1L, requestDto);
 
         verify(userRepository).save(newUser);
-        verify(userMapper).updateUserFromDto(userRequestDto, newUser);
+        verify(userMapper).updateUserFromDto(requestDto, newUser);
     }
 
     @Test
