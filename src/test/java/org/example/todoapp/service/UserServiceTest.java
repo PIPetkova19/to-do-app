@@ -5,6 +5,7 @@ import org.example.todoapp.task.model.Task;
 import org.example.todoapp.task.repository.TaskRepository;
 import org.example.todoapp.user.dto.UserRequestDto;
 import org.example.todoapp.user.dto.UserResponseDto;
+import org.example.todoapp.user.event.UserRegistrationEvent;
 import org.example.todoapp.user.mapper.UserMapper;
 import org.example.todoapp.user.repository.UserRepository;
 import org.example.todoapp.user.model.User;
@@ -15,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.example.todoapp.user.service.UserServiceImpl;
+import org.springframework.context.ApplicationEventPublisher;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,6 +25,7 @@ import java.util.Optional;
 import static org.example.todoapp.task.model.Priority.HIGH;
 import static org.example.todoapp.task.model.Status.TODO;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -39,6 +42,9 @@ public class UserServiceTest {
 
     @Mock
     TaskRepository taskRepository;
+
+    @Mock
+    ApplicationEventPublisher publisher;
 
     private UserRequestDto userRequestDto;
     private UserResponseDto userResponseDto;
@@ -60,11 +66,13 @@ public class UserServiceTest {
     @Test
     void should_save_user() {
         when(userMapper.toEntity(userRequestDto)).thenReturn(user);
-
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.empty());
         userService.save(userRequestDto);
 
         verify(userMapper).toEntity(userRequestDto);
+        verify(userRepository).findByEmail(user.getEmail());
         verify(userRepository).save(user);
+        verify(publisher).publishEvent(any(UserRegistrationEvent.class));
     }
 
     @Test
@@ -100,10 +108,8 @@ public class UserServiceTest {
 
         userService.update(1L, userRequestDto);
 
-        assertEquals("petya",newUser.getFirstName());
-        assertEquals("p@gmail.com",newUser.getEmail());
-
         verify(userRepository).save(newUser);
+        verify(userMapper).updateUserFromDto(userRequestDto,newUser);
     }
 
     @Test
