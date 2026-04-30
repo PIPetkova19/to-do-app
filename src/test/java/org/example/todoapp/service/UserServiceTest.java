@@ -80,9 +80,9 @@ public class UserServiceTest {
         when(userRepository.findById(user.getId())).thenReturn(Optional.ofNullable(user));
         when(userMapper.toDto(user)).thenReturn(userResponseDto);
 
-        UserResponseDto newUser=userService.getById(user.getId());
+        UserResponseDto newUser = userService.getById(user.getId());
 
-        assertEquals(userResponseDto,newUser);
+        assertEquals(userResponseDto, newUser);
 
         verify(userMapper).toDto(user);
         verify(userRepository).findById(user.getId());
@@ -109,7 +109,7 @@ public class UserServiceTest {
         userService.update(1L, userRequestDto);
 
         verify(userRepository).save(newUser);
-        verify(userMapper).updateUserFromDto(userRequestDto,newUser);
+        verify(userMapper).updateUserFromDto(userRequestDto, newUser);
     }
 
     @Test

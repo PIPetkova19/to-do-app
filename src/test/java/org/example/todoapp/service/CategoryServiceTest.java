@@ -6,6 +6,7 @@ import org.example.todoapp.category.mapper.CategoryMapper;
 import org.example.todoapp.category.model.Category;
 import org.example.todoapp.category.repository.CategoryRepository;
 import org.example.todoapp.category.service.CategoryService;
+import org.example.todoapp.category.service.CategoryServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +27,7 @@ public class CategoryServiceTest {
     private CategoryRepository categoryRepository;
 
     @InjectMocks
-    private CategoryService categoryService;
+    private CategoryServiceImpl categoryService;
 
     @Mock
     private CategoryMapper categoryMapper;
@@ -67,6 +68,7 @@ public class CategoryServiceTest {
 
     @Test
     public void should_delete_category() {
+        when(categoryRepository.existsById(1L)).thenReturn(true);
         categoryService.delete(category.getId());
 
         verify(categoryRepository).deleteById(category.getId());
@@ -79,9 +81,8 @@ public class CategoryServiceTest {
 
         categoryService.update(1L, requestDto);
 
-        assertEquals("work",newCategory.getTitle());
-
         verify(categoryRepository).save(newCategory);
+        verify(categoryMapper).updateCategoryFromDto(requestDto, newCategory);
     }
 
     @Test
