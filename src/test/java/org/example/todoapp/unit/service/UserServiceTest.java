@@ -1,4 +1,4 @@
-package org.example.todoapp.service;
+package org.example.todoapp.unit.service;
 
 import org.example.todoapp.category.model.Category;
 import org.example.todoapp.task.model.Task;

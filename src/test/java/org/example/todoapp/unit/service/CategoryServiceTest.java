@@ -1,4 +1,4 @@
-package org.example.todoapp.service;
+package org.example.todoapp.unit.service;
 
 import org.example.todoapp.category.dto.CategoryRequestDto;
 import org.example.todoapp.category.dto.CategoryResponseDto;

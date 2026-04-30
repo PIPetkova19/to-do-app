@@ -1,4 +1,4 @@
-package org.example.todoapp.strategy;
+package org.example.todoapp.unit.strategy;
 
 import org.example.todoapp.category.model.Category;
 import org.example.todoapp.task.model.Priority;
