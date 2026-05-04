@@ -61,6 +61,17 @@ public class Task extends BaseEntity {
         this.ownerUser = ownerUser;
     }
 
+    //tests
+    public Task(String title, String desc, LocalDate dueDate, Priority priority, Status status, Category category, User user) {
+        this.title = title;
+        this.description = desc;
+        this.dueDate = dueDate;
+        this.priority = priority;
+        this.status = status;
+        this.category = category;
+        this.ownerUser = user;
+    }
+
     public String getTitle() {
         return title;
     }
