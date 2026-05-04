@@ -3,11 +3,12 @@ package org.example.todoapp.integration.controller;
 import org.example.todoapp.user.controller.UserController;
 import org.example.todoapp.user.dto.UserRequestDto;
 import org.example.todoapp.user.dto.UserResponseDto;
-import org.example.todoapp.user.service.UserServiceImpl;
+import org.example.todoapp.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -21,13 +22,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UserController.class)
+@ActiveProfiles("test")
 class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockitoBean
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @Test
     void should_save_user() throws Exception {
@@ -97,5 +99,18 @@ class UserControllerTest {
                 .andExpect(status().isOk());
 
         verify(userService).delete(1L);
+    }
+    @Test
+    void should_returnBadRequest_whenEmailIsInvalid() throws Exception {
+        mockMvc.perform(post("/api/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                            {
+                              "firstName": "Petya",
+                              "lastName": "Petkova",
+                              "email": "invalid-email"
+                            }
+                            """))
+                .andExpect(status().isBadRequest());
     }
 }

@@ -6,6 +6,7 @@ import org.example.todoapp.user.dto.UserRequestDto;
 import org.example.todoapp.user.dto.UserResponseDto;
 import org.example.todoapp.user.model.User;
 import org.example.todoapp.user.repository.UserRepository;
+import org.example.todoapp.user.service.UserService;
 import org.example.todoapp.user.service.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,7 @@ import static org.mockito.Mockito.when;
 public class UserServiceTest {
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @Autowired
     private UserRepository userRepository;

@@ -5,6 +5,7 @@ import org.example.todoapp.category.dto.CategoryResponseDto;
 import org.example.todoapp.category.mapper.CategoryMapper;
 import org.example.todoapp.category.model.Category;
 import org.example.todoapp.category.repository.CategoryRepository;
+import org.example.todoapp.category.service.CategoryService;
 import org.example.todoapp.category.service.CategoryServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +33,9 @@ public class CategoryServiceTest {
     private CategoryMapper categoryMapper;
 
     private Category category;
+
     private CategoryResponseDto responseDto;
+
     private CategoryRequestDto requestDto;
 
     @BeforeEach

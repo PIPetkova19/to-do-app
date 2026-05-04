@@ -13,21 +13,21 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FilterByTitleTest{
+public class FilterByTitleTest {
     @Test
-    public void should_filter_byTitle(){
-        User user=new User(1L,"petya","petkova","p@gmail.com");
-        Category category = new Category(1L,"work");
-        Task task1=new Task(1L,"title 1","desc",
-                LocalDate.parse("2020-01-01"), Priority.HIGH, Status.TODO,category,user);
-        Task task2=new Task(2L,"title 2","desc",
-                LocalDate.parse("2021-01-01"), Priority.LOW, Status.TODO,category,user);
+    public void should_filter_byTitle() {
+        User user = new User(1L, "petya", "petkova", "p@gmail.com");
+        Category category = new Category(1L, "work");
+        Task task1 = new Task(1L, "title 1", "desc",
+                LocalDate.parse("2020-01-01"), Priority.HIGH, Status.TODO, category, user);
+        Task task2 = new Task(2L, "title 2", "desc",
+                LocalDate.parse("2021-01-01"), Priority.LOW, Status.TODO, category, user);
         List<Task> tasks = List.of(task1, task2);
-        List<Task> filteredTasks= List.of(task1);
-        FilterByTitle filter=new FilterByTitle();
+        List<Task> filteredTasks = List.of(task1);
+        FilterByTitle filter = new FilterByTitle();
 
-        List<Task> result=filter.filter(tasks,"title 1");
+        List<Task> result = filter.filter(tasks, "title 1");
 
-        assertEquals(filteredTasks,result);
+        assertEquals(filteredTasks, result);
     }
 }
