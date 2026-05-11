@@ -3836,3 +3836,48 @@ Identify and stop the process that's listening on port 8081 or configure this ap
 2026-05-11T17:05:09.446+03:00  INFO 19484 --- [to-do-app] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2026-05-11T17:05:09.448+03:00  INFO 19484 --- [to-do-app] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2026-05-11T17:05:09.457+03:00  INFO 19484 --- [to-do-app] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-05-11T17:05:14.428+03:00  INFO 19752 --- [to-do-app] [main] org.example.todoapp.ToDoAppApplication   : Starting ToDoAppApplication using Java 21.0.6 with PID 19752 (C:\Users\user\IdeaProjects\to-do-app\backend\target\classes started by user in C:\Users\user\IdeaProjects\to-do-app\backend)
+2026-05-11T17:05:14.430+03:00  INFO 19752 --- [to-do-app] [main] org.example.todoapp.ToDoAppApplication   : The following 1 profile is active: "dev"
+2026-05-11T17:05:15.272+03:00  INFO 19752 --- [to-do-app] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-11T17:05:15.355+03:00  INFO 19752 --- [to-do-app] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 76 ms. Found 3 JPA repository interfaces.
+2026-05-11T17:05:15.781+03:00  INFO 19752 --- [to-do-app] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2026-05-11T17:05:15.793+03:00  INFO 19752 --- [to-do-app] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-05-11T17:05:15.794+03:00  INFO 19752 --- [to-do-app] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.39]
+2026-05-11T17:05:15.842+03:00  INFO 19752 --- [to-do-app] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-05-11T17:05:15.842+03:00  INFO 19752 --- [to-do-app] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1360 ms
+2026-05-11T17:05:15.954+03:00  INFO 19752 --- [to-do-app] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-05-11T17:05:16.137+03:00  INFO 19752 --- [to-do-app] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3e8799f
+2026-05-11T17:05:16.139+03:00  INFO 19752 --- [to-do-app] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-05-11T17:05:16.288+03:00  INFO 19752 --- [to-do-app] [main] liquibase.database                       : Set default schema name to public
+2026-05-11T17:05:16.890+03:00  INFO 19752 --- [to-do-app] [main] liquibase.changelog                      : Reading from public.databasechangelog
+2026-05-11T17:05:16.952+03:00  INFO 19752 --- [to-do-app] [main] liquibase.ui                             : Database is up to date, no changesets to execute
+2026-05-11T17:05:16.955+03:00  INFO 19752 --- [to-do-app] [main] liquibase.changelog                      : Reading from public.databasechangelog
+2026-05-11T17:05:16.964+03:00  INFO 19752 --- [to-do-app] [main] liquibase.util                           : UPDATE SUMMARY
+2026-05-11T17:05:16.965+03:00  INFO 19752 --- [to-do-app] [main] liquibase.util                           : Run:                          0
+2026-05-11T17:05:16.965+03:00  INFO 19752 --- [to-do-app] [main] liquibase.util                           : Previously run:              14
+2026-05-11T17:05:16.965+03:00  INFO 19752 --- [to-do-app] [main] liquibase.util                           : Filtered out:                 0
+2026-05-11T17:05:16.965+03:00  INFO 19752 --- [to-do-app] [main] liquibase.util                           : -------------------------------
+2026-05-11T17:05:16.965+03:00  INFO 19752 --- [to-do-app] [main] liquibase.util                           : Total change sets:           14
+2026-05-11T17:05:16.966+03:00  INFO 19752 --- [to-do-app] [main] liquibase.util                           : Update summary generated
+2026-05-11T17:05:16.967+03:00  INFO 19752 --- [to-do-app] [main] liquibase.command                        : Command execution complete
+2026-05-11T17:05:17.047+03:00  INFO 19752 --- [to-do-app] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-05-11T17:05:17.096+03:00  INFO 19752 --- [to-do-app] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.11.Final
+2026-05-11T17:05:17.142+03:00  INFO 19752 --- [to-do-app] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-05-11T17:05:17.497+03:00  INFO 19752 --- [to-do-app] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-05-11T17:05:17.558+03:00  WARN 19752 --- [to-do-app] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-05-11T17:05:17.573+03:00  INFO 19752 --- [to-do-app] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 18.3
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-05-11T17:05:18.536+03:00  INFO 19752 --- [to-do-app] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-05-11T17:05:18.564+03:00  INFO 19752 --- [to-do-app] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-05-11T17:05:18.977+03:00  WARN 19752 --- [to-do-app] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-05-11T17:05:19.320+03:00  INFO 19752 --- [to-do-app] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2026-05-11T17:05:19.328+03:00  INFO 19752 --- [to-do-app] [main] org.example.todoapp.ToDoAppApplication   : Started ToDoAppApplication in 5.476 seconds (process running for 6.354)
+2026-05-11T17:05:43.503+03:00  INFO 19752 --- [to-do-app] [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-05-11T17:05:43.503+03:00  INFO 19752 --- [to-do-app] [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-05-11T17:05:43.503+03:00  INFO 19752 --- [to-do-app] [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
